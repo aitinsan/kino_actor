@@ -98,34 +98,3 @@ class _SomeCardsState extends State<SomeCards> {
 
 
 
-/*class NewCard extends StatefulWidget {
-  NewCard({Key? key}) : super(key: key);
-
-  @override
-  _NewCardState createState() => _NewCardState();
-}
-
-class _NewCardState extends State<NewCard> {
-  late Future<Films> futureFilm = fetchFilm(3);
-  final items = List<String>.generate(10000, (i) => "Item $i");
-  
-  
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: FutureBuilder<Films>(
-      future: futureFilm,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Text(snapshot.data!.title);
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
-
-        // By default, show a loading spinner.
-        return CircularProgressIndicator();
-      },
-    ));
-  }
-}*/

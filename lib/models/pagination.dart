@@ -4,22 +4,24 @@ class Pagination {
   int? count;
   var next;
   var previous;
-  List<People>? results;
+  List<People> results;
 
   Pagination({
     this.count,
     this.next,
     this.previous,
-    this.results,
+    required this.results,
   
   });
 
   factory Pagination.fromJson(Map<String, dynamic> json) {
+    final test = json['results'] as List;
+    List<People> items = test.map((e) => People.fromJson(e)).toList();
     return Pagination(
       count: json['count'],
       next: json['next'],
       previous:json['previous'],
-      results: 
+      results: items,
     );
   }
 }

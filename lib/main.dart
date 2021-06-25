@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kino_actor/fileToTestSomthing.dart';
 import 'package:kino_actor/models/film.dart';
 import 'package:kino_actor/screens/films.dart';
 import '../Navigation.dart';
@@ -21,7 +22,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Kinoactor',
       //theme:
-      home: NavigationAppPage(initialPage: 'films',),
+      home: NavigationAppPage(initialPage: 'actors',),
     );
     
   }

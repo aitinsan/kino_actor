@@ -1,3 +1,4 @@
+
 class People {
   final String name;
   final String heigth;
@@ -37,21 +38,22 @@ class People {
 
   factory People.fromJson(Map<String, dynamic> json) {
     return People(
-        json['name'],
-        json['height'],
-        json['mass'],
-        json['hair_color'],
-        json['skin_color'],
-        json['eye_color'],
-        json['birth_year'],
-        json['gender'],
-        json['homeworld'],
-        json['films'],
-        json['species'],
-        json['vehicles'],
-        json['starships'],
-        json['created'],
-        json['edited'],
-        json['url']);
+        json['name'] as String,
+        json['height'] as String,
+        json['mass'] as String,
+        json['hair_color'] as String,
+        json['skin_color'] as String,
+        json['eye_color'] as String,
+        json['birth_year'] as String,
+        json['gender'] as String,
+        json['homeworld'] as String,
+        json['films'] as List,
+        json['species'] as List,
+        json['vehicles'] as List,
+        json['starships'] as List,
+        json['created'] as String,
+        json['edited'] as String,
+        json['url'] as String);
   }
+
 }
