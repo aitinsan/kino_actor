@@ -58,43 +58,8 @@ class _FilmsPageState extends State<FilmsPage> {
         ],
       ),
 
-      SomeCards() //NewCard()
+     
     ]);
   }
 }
-
-class SomeCards extends StatefulWidget {
-  SomeCards({Key? key}) : super(key: key);
-
-  @override
-  _SomeCardsState createState() => _SomeCardsState();
-}
-
-class _SomeCardsState extends State<SomeCards> {
-  Future<Pagination> futurePagination = fetchPaginationPeople(2);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: FutureBuilder<Pagination>(
-          future: futurePagination,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              print(snapshot.data!.results);
-              return Text(snapshot.data!.next);
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            }
-
-            // By default, show a loading spinner.
-            return CircularProgressIndicator();
-          },
-        ),
-      ),
-    );
-  }
-}
-
-
 

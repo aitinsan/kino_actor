@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/fileToTestSomthing.dart';
-import 'package:kino_actor/models/film.dart';
-import 'package:kino_actor/repository/backend.dart';
-import 'package:kino_actor/screens/films.dart';
+import 'package:kino_actor/models/actors_list_counter.dart';
 import 'package:provider/provider.dart';
 import '../Navigation.dart';
-import 'models/pagination.dart';
 
 void main() {
   runApp(
