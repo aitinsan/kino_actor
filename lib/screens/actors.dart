@@ -1,36 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:kino_actor/models/pagination.dart';
 import 'package:kino_actor/models/people.dart';
-
-Future<List<People>> fetchPeople(http.Client client) async {
-  final response = await client.get(
-    Uri.parse('https://swapi.dev/api/people/?page=2'),
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Charset': 'utf-8'
-    },
-  );
-
-  final result = Pagination.fromJson(
-      jsonDecode(response.body),
-    ).results;
-  return result;
-}
-
-//функция которая конвертирует респонс в лист актеров
-// List<People> parsePeople(List<People> peoples) {
-//   print('start parse');
-//   print('responseBody $peoples');
-//   return List<People>.from(
-//       peoples.map<People>(
-//         (json) => People.fromJson(json),
-//       )
-//       .toList());
-// }
+import 'package:kino_actor/repository/backend.dart';
+import 'package:http/http.dart' as http;
+import 'package:kino_actor/screens/people_list.dart';
+import 'package:provider/provider.dart';
+//todo сделать нормальная архитекуту(репозиторий виджеты) сделать функцую кторая расширает лист и выводит его через листвью
 
 class ActorsPage extends StatefulWidget {
   ActorsPage({Key? key}) : super(key: key);
@@ -40,9 +16,16 @@ class ActorsPage extends StatefulWidget {
 }
 
 class _ActorsPageState extends State<ActorsPage> {
+  /*int pageIndex =1;
+  Future<void> _changePageIndex() async{
+    setState(() {
+      pageIndex++;
+    });
+  }*/
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(children: <Widget> [
       Row(
         children: <Widget>[
           Expanded(
@@ -67,37 +50,46 @@ class _ActorsPageState extends State<ActorsPage> {
               ))
         ],
       ),
-      FutureBuilder<List<People>>(
-        future: fetchPeople(http.Client()),
+
+      
+      Expanded(child:PeopleList(peoples: context.watch<ActorsListCounter>().allPeople)),
+      
+
+      TextButton(
+          onPressed: () => context.read<ActorsListCounter>().increment(),
+          child: Text("${context.watch<ActorsListCounter>().pageIndex}")),
+
+
+
+
+
+      //Expanded(child: ListView.builder(padding: const EdgeInsets.all(8),itemBuilder: itemBuilder))
+      //это нужно изменить на листвью
+      /*FutureBuilder<List<People>>(
+        future: fetchPeople(http.Client(), pageIndex),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
 
           return PeopleList(peoples: snapshot.data!);
-              
-              
         },
       ),
+      TextButton(
+        onPressed: () {
+          _changePageIndex();
+        },
+        child: Text("changeIndex"),
+      ),*/
     ]);
   }
 }
 
-class PeopleList extends StatelessWidget {
-  List<People> peoples;
-  PeopleList({Key? key, required this.peoples}) : super(key: key);
-  
+class ActorsPageNumber extends StatelessWidget {
+  const ActorsPageNumber({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    print('name ${peoples[0].name}');
-    return Expanded(child: GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-      ),
-      itemCount: peoples.length,
-      itemBuilder: (context, index) {
-        return Text(
-          peoples[index].name,
-        );
-      },
-    ));
+    return Container(
+      child: null,
+    );
   }
 }
