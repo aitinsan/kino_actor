@@ -1,11 +1,24 @@
-
+import 'package:kino_actor/constants.dart';
 import 'package:kino_actor/models/people.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:kino_actor/models/pagination.dart';
+import 'package:kino_actor/models/responce.dart';
+
 
 //функция проверяет есть ли следующая страница
-Future<bool> fetcNext(http.Client client, int pageIndex) async{
+Future<List<People>> fetchPeople(http.Client client, int pageIndex) async {
+  return await ResponseClass('$ALL_PEOPLE_PAGE$pageIndex',client).someListOfPeople;}
+
+//для того чтобы достать людей с пейджа
+Future<bool> fetcNext(http.Client client, int pageIndex) async {
+  return  await ResponseClass('$ALL_PEOPLE_PAGE$pageIndex',client).isNextExist;}
+
+
+
+
+
+
+//функция проверяет есть ли следующая страница
+/*Future<bool> fetcNext(http.Client client, int pageIndex) async{
   final response = await client.get(Uri.parse('https://swapi.dev/api/people/?page=$pageIndex'),);
   final nextOrNull = Pagination.fromJson(jsonDecode(response.body),).next;
   print(nextOrNull);
@@ -35,5 +48,4 @@ Future<List<People>> fetchPeople(http.Client client, int pageIndex) async {
   return result;
 }
 
-
-
+*/

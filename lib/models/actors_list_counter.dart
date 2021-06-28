@@ -13,11 +13,11 @@ class ActorsListCounter with ChangeNotifier {
   
   int get pageIndex => _pageIndex;
   Future<bool> checkNext() async{
-    return await fetcNext(http.Client(), _pageIndex);
+    return fetcNext(http.Client(), _pageIndex);
   }
   //выводит данные с одной страницы
   Future<List<People>> addForList() async {
-    return await fetchPeople(http.Client(), _pageIndex);
+    return fetchPeople(http.Client(), _pageIndex);
   }
 
 

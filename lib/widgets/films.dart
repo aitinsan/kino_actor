@@ -2,10 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kino_actor/models/pagination.dart';
-import 'package:kino_actor/models/film.dart';
-import 'dart:convert' as convert;
 
-import 'package:kino_actor/models/people.dart';
 
 Future<Pagination> fetchPaginationPeople(int countNumber) async {
   final response = await http
