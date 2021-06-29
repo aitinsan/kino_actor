@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kino_actor/models/searched_list_of_people.dart';
 import 'package:kino_actor/widgets/actors_searched_items.dart';
+import 'package:provider/provider.dart';
 
 class SearchedPeopleScreen extends StatelessWidget {
   const SearchedPeopleScreen({Key? key}) : super(key: key);
@@ -8,7 +10,19 @@ class SearchedPeopleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //leading: 
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.backpack),
+              onPressed: () {
+                Provider.of<SearchedActorsListCounter>(context,listen: false).changeListOfPeople();
+                Navigator.pop(context);
+
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
         //backwardsCompatibility: false,
         title: Text('Searched Actors'),
         backgroundColor: Color(0xFF670974),
