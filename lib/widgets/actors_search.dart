@@ -3,14 +3,14 @@ import 'package:kino_actor/models/searched_list_of_people.dart';
 import 'package:kino_actor/screens/searched_people_screen.dart';
 import 'package:provider/provider.dart';
 
-class SearchedActors extends StatefulWidget {
-  SearchedActors({Key? key}) : super(key: key);
+class ActorsSearch extends StatefulWidget {
+  ActorsSearch({Key? key}) : super(key: key);
 
   @override
-  _SearchedActorsState createState() => _SearchedActorsState();
+  _ActorsSearchState createState() => _ActorsSearchState();
 }
 
-class _SearchedActorsState extends State<SearchedActors> {
+class _ActorsSearchState extends State<ActorsSearch> {
   var textController = TextEditingController();
   @override
   Widget build(BuildContext context) {

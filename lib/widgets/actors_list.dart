@@ -3,14 +3,14 @@ import 'package:kino_actor/models/actors_list_counter.dart';
 import 'package:kino_actor/models/people.dart';
 import 'package:provider/provider.dart';
 
-class PeopleList extends StatefulWidget {
-  PeopleList({Key? key}) : super(key: key);
+class ActorsList extends StatefulWidget {
+  ActorsList({Key? key}) : super(key: key);
 
   @override
-  _PeopleListState createState() => _PeopleListState();
+  _ActorsListState createState() => _ActorsListState();
 }
 
-class _PeopleListState extends State<PeopleList> {
+class _ActorsListState extends State<ActorsList> {
   final ScrollController _controller = ScrollController();
 
   @override

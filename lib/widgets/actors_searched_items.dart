@@ -3,15 +3,15 @@ import 'package:kino_actor/models/people.dart';
 import 'package:kino_actor/models/searched_list_of_people.dart';
 import 'package:provider/provider.dart';
 
-class SearchedPeople extends StatefulWidget {
+class ActorsSearchedItems extends StatefulWidget {
   
-  SearchedPeople({Key? key}) : super(key: key);
+  ActorsSearchedItems({Key? key}) : super(key: key);
 
   @override
-  _SearchedPeopleState createState() => _SearchedPeopleState();
+  _ActorsSearchedItemsState createState() => _ActorsSearchedItemsState();
 }
 
-class _SearchedPeopleState extends State<SearchedPeople> {
+class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
   final ScrollController _controller = ScrollController();
   
   

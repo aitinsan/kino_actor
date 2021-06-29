@@ -11,16 +11,18 @@ class Pagination {
     this.next,
     this.previous,
     required this.results,
-  
   });
 
   factory Pagination.fromJson(Map<String, dynamic> json) {
-    final test = json['results'] as List;
-    List<People> items = test.map((e) => People.fromJson(e)).toList();
+    //проверяет на нулл не нулл
+    final test = json['results'] == null ? [] : json['results'] as List;
+    
+    
+      List<People> items = test.map((e) => People.fromJson(e)).toList();
     return Pagination(
       count: json['count'],
       next: json['next'],
-      previous:json['previous'],
+      previous: json['previous'],
       results: items,
     );
   }

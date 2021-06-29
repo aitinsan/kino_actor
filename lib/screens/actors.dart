@@ -22,12 +22,12 @@ class _ActorsPageState extends State<ActorsPage> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      SearchedActors(),
+      ActorsSearch(),
       /*Expanded(
           child: SearchedPeople(),
         ),*/
       Expanded(
-        child: PeopleList(),
+        child: ActorsList(),
       ), 
       
     ]);

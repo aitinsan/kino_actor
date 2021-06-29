@@ -17,12 +17,24 @@ Future<bool> fetcNext(http.Client client, int pageIndex) async {
 //для того чтобы достать людей с поиска
 Future<List<People>> fetchSearchPeople(
     http.Client client, int pageIndex, String keyword) async {
-  return await ResponseClass('$SEARCH_PEOPLE_PAGE$keyword&page=$pageIndex', client)
+      List<People> someResult = await ResponseClass(
+          '$SEARCH_PEOPLE_PAGE$keyword&page=$pageIndex', client)
       .someListOfPeople;
+      return someResult;
+      /*if (someResult == null){
+        return [];
+      }else {
+        return someResult;
+      }*/
+  
 }
+
 //функция проверяет есть ли следующая страница по поиску
-Future<bool> fetchSeacrhNext(http.Client client, int pageIndex, String keyword) async {
-  return await ResponseClass('$SEARCH_PEOPLE_PAGE$keyword&page=$pageIndex', client).isNextExist;
+Future<bool> fetchSeacrhNext(
+    http.Client client, int pageIndex, String keyword) async {
+  return await ResponseClass(
+          '$SEARCH_PEOPLE_PAGE$keyword&page=$pageIndex', client)
+      .isNextExist;
 }
 
 
