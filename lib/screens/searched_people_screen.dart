@@ -13,9 +13,9 @@ class SearchedPeopleScreen extends StatelessWidget {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: const Icon(Icons.backpack),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Provider.of<SearchedActorsListCounter>(context,listen: false).changeListOfPeople();
+                
                 Navigator.pop(context);
 
               },

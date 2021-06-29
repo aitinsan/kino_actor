@@ -31,14 +31,10 @@ class SearchedActorsListCounter with ChangeNotifier {
     _allPeople = await addForList(_keyword);
     notifyListeners();
   }
-  void changeListOfPeople() async{
-
-    _allPeople = await addForList(_keyword);
-    notifyListeners();
-  }
+ 
 
 
-  void cleaPeoples() async{
+  void cleanPeoples() {
     _allPeople = [];
     _pageIndex = 0;
     notifyListeners();
