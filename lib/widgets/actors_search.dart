@@ -40,7 +40,7 @@ class _ActorsSearchState extends State<ActorsSearch> {
                 color: Colors.black.withAlpha(120),
               ),
               onPressed: () {
-
+                Provider.of<SearchedActorsListCounter>(context,listen: false).cleaPeoples();
                 Provider.of<SearchedActorsListCounter>(context,listen: false).changeSearch(textController.text);
                 print(context.read<SearchedActorsListCounter>().keywordText);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => SearchedPeopleScreen()),);

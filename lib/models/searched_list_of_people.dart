@@ -37,6 +37,14 @@ class SearchedActorsListCounter with ChangeNotifier {
     notifyListeners();
   }
 
+
+  void cleaPeoples() async{
+    _allPeople = [];
+    _pageIndex = 0;
+    notifyListeners();
+  }
+
+
   void increment() async {
     _pageIndex++;
     _isNextExists = await checkNext(_keyword);
