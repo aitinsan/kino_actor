@@ -3,18 +3,27 @@ import 'package:kino_actor/models/people.dart';
 import 'package:http/http.dart' as http;
 import 'package:kino_actor/models/responce.dart';
 
+//для того чтобы достать людей с пейджа
+Future<List<People>> fetchPeople(http.Client client, int pageIndex) async {
+  return await ResponseClass('$ALL_PEOPLE_PAGE$pageIndex', client)
+      .someListOfPeople;
+}
 
 //функция проверяет есть ли следующая страница
-Future<List<People>> fetchPeople(http.Client client, int pageIndex) async {
-  return await ResponseClass('$ALL_PEOPLE_PAGE$pageIndex',client).someListOfPeople;}
-
-//для того чтобы достать людей с пейджа
 Future<bool> fetcNext(http.Client client, int pageIndex) async {
-  return  await ResponseClass('$ALL_PEOPLE_PAGE$pageIndex',client).isNextExist;}
+  return await ResponseClass('$ALL_PEOPLE_PAGE$pageIndex', client).isNextExist;
+}
 
-
-
-
+//для того чтобы достать людей с поиска
+Future<List<People>> fetchSearchPeople(
+    http.Client client, int pageIndex, String keyword) async {
+  return await ResponseClass('$SEARCH_PEOPLE_PAGE$keyword&page=$pageIndex', client)
+      .someListOfPeople;
+}
+//функция проверяет есть ли следующая страница по поиску
+Future<bool> fetchSeacrhNext(http.Client client, int pageIndex, String keyword) async {
+  return await ResponseClass('$SEARCH_PEOPLE_PAGE$keyword&page=$pageIndex', client).isNextExist;
+}
 
 
 //функция проверяет есть ли следующая страница

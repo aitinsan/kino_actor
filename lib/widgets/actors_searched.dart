@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors_list_counter.dart';
 import 'package:kino_actor/models/people.dart';
+import 'package:kino_actor/models/searched_list_of_people.dart';
 import 'package:provider/provider.dart';
 
-class PeopleList extends StatefulWidget {
-  PeopleList({Key? key}) : super(key: key);
+class SearchedPeople extends StatefulWidget {
+  
+  SearchedPeople({Key? key}) : super(key: key);
 
   @override
-  _PeopleListState createState() => _PeopleListState();
+  _SearchedPeopleState createState() => _SearchedPeopleState();
 }
 
-class _PeopleListState extends State<PeopleList> {
+class _SearchedPeopleState extends State<SearchedPeople> {
   final ScrollController _controller = ScrollController();
-
+  
+  
+  
   @override
   void initState() {
     _controller.addListener(_onScroll);
@@ -22,25 +25,25 @@ class _PeopleListState extends State<PeopleList> {
   _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      context.read<ActorsListCounter>().increment();
+      context.read<SearchedActorsListCounter>().increment();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<People> peoples = context.watch<ActorsListCounter>().allPeople;
-    if (context.watch<ActorsListCounter>().isNextExist) {
+    List<People> peoples = context.watch<SearchedActorsListCounter>().allPeople;
+    if (context.watch<SearchedActorsListCounter>().isNextExist) {
       return GridView.builder(
         controller: _controller,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: 1,
         ),
         itemCount: peoples.length + 1,
         itemBuilder: (context, index) {
           if (peoples.length == 0) {
-            context.read<ActorsListCounter>().increment();
+            context.read<SearchedActorsListCounter>().increment();
           }
-          print(context.watch<ActorsListCounter>().isNextExist);
+          
           if (peoples.length == index) {
             return Center(
               child: CircularProgressIndicator(),
@@ -49,7 +52,7 @@ class _PeopleListState extends State<PeopleList> {
             return Padding(
               padding: EdgeInsets.all(10),
               child: Container(
-                color: Colors.amber,
+                color: Colors.blueAccent,
                 child: Text(
                   peoples[index].name,
                 ),
@@ -63,23 +66,23 @@ class _PeopleListState extends State<PeopleList> {
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: 1,
               ),
               itemCount: peoples.length + 1,
               itemBuilder: (context, index) {
                 if (peoples.length == 0) {
-                  context.read<ActorsListCounter>().increment();
+                  context.read<SearchedActorsListCounter>().increment();
                 }
-                print(context.watch<ActorsListCounter>().isNextExist);
+                //print(context.read<SearchedActorsListCounter>().keywordText);
                 if (peoples.length == index) {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: Text('No more data'),
                   );
                 } else
                   return Padding(
                     padding: EdgeInsets.all(10),
                     child: Container(
-                      color: Colors.amber,
+                      color: Colors.blueAccent,
                       child: Text(
                         peoples[index].name,
                       ),
@@ -88,7 +91,6 @@ class _PeopleListState extends State<PeopleList> {
               },
             ),
           ),
-          Text("No more data")
         ],
       );
     }

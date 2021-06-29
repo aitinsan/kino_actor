@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:kino_actor/widgets/people_list.dart';
-import 'package:kino_actor/widgets/search_actors.dart';
+import 'package:kino_actor/widgets/actors_list.dart';
+import 'package:kino_actor/widgets/actors_search.dart';
 
 class ActorsPage extends StatefulWidget {
   ActorsPage({Key? key}) : super(key: key);
@@ -10,14 +10,26 @@ class ActorsPage extends StatefulWidget {
   _ActorsPageState createState() => _ActorsPageState();
 }
 
+
+/*final _tabsActors = {
+      'allActors': PeopleList(),
+      'searchedActers': SearchedPeople(),
+    };*/
+
+
+
 class _ActorsPageState extends State<ActorsPage> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      SearchActors(),
+      SearchedActors(),
+      /*Expanded(
+          child: SearchedPeople(),
+        ),*/
       Expanded(
         child: PeopleList(),
       ), 
+      
     ]);
   }
 }

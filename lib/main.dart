@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/models/actors_list_counter.dart';
+import 'package:kino_actor/models/searched_list_of_people.dart';
 import 'package:provider/provider.dart';
 import '../Navigation.dart';
 
@@ -9,9 +10,13 @@ void main() {
     /// can use [MyApp] while mocking the providers
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ActorsListCounter()),
+        
+        ChangeNotifierProvider(create: (_) => ActorsListCounter(),),
+        ChangeNotifierProvider(create: (_) => SearchedActorsListCounter('l'),),
+        
       ],
       child: MyApp(),
+      
     ),
   );
 

@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 //класс для показа актеров
 class ActorsListCounter with ChangeNotifier {
   List<People> _allPeople = [];
-
+ 
   int _pageIndex = 0;
   bool _isNextExists = true;
   
@@ -20,7 +20,6 @@ class ActorsListCounter with ChangeNotifier {
     return fetchPeople(http.Client(), _pageIndex);
   }
 
-
   void increment() async {
     _pageIndex++;
     _isNextExists = await checkNext();
@@ -30,7 +29,4 @@ class ActorsListCounter with ChangeNotifier {
   bool get isNextExist => _isNextExists;
   
   List<People> get allPeople => _allPeople;
-
-
-
 }
