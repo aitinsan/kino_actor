@@ -10,28 +10,14 @@ class ActorsPage extends StatefulWidget {
   _ActorsPageState createState() => _ActorsPageState();
 }
 
-
-/*final _tabsActors = {
-      'allActors': PeopleList(),
-      'searchedActers': SearchedPeople(),
-    };*/
-
-
-
 class _ActorsPageState extends State<ActorsPage> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       ActorsSearch(),
-      /*Expanded(
-          child: SearchedPeople(),
-        ),*/
       Expanded(
         child: ActorsList(),
-      ), 
-      
+      ),
     ]);
   }
 }
-
-

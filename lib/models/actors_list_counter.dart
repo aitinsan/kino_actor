@@ -1,32 +1,23 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:kino_actor/models/people.dart';
-import 'package:kino_actor/repository/backend.dart';
+import 'package:kino_actor/models/list_counter.dart';
+import 'package:kino_actor/models/actors.dart';
+import 'package:kino_actor/repository/backendActors.dart';
 import 'package:http/http.dart' as http;
 
 //класс для показа актеров
-class ActorsListCounter with ChangeNotifier {
-  List<People> _allPeople = [];
- 
-  int _pageIndex = 0;
-  bool _isNextExists = true;
-  
-  int get pageIndex => _pageIndex;
-  Future<bool> checkNext() async{
-    return fetcNext(http.Client(), _pageIndex);
-  }
-  //выводит данные с одной страницы
-  Future<List<People>> addForList() async {
-    return fetchPeople(http.Client(), _pageIndex);
-  }
+
+class ActorsListCounter extends ListCounter {
+  List<Actors> _allPeople = [];
+
+  List<Actors> get allPeople => _allPeople;
 
   void increment() async {
-    _pageIndex++;
-    _isNextExists = await checkNext();
+    pageIndex++;
+    isNextExists = await checkNext();
     _allPeople += await addForList();
     notifyListeners();
   }
-  bool get isNextExist => _isNextExists;
-  
-  List<People> get allPeople => _allPeople;
+
+  Future<List<Actors>> addForList() async {
+    return fetchPeople(http.Client(), pageIndex);
+  }
 }

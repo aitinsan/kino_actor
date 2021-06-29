@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/searched_list_of_people.dart';
-import 'package:kino_actor/widgets/actors_searched_items.dart';
+import 'package:kino_actor/models/films_list_search.dart';
+import 'package:kino_actor/widgets/films_searched_items.dart';
 import 'package:provider/provider.dart';
 
-class SearchedPeopleScreen extends StatelessWidget {
-  const SearchedPeopleScreen({Key? key}) : super(key: key);
+class FilmsSearchedScreen extends StatelessWidget {
+  const FilmsSearchedScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +15,18 @@ class SearchedPeopleScreen extends StatelessWidget {
             return IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                
+                Provider.of<FilmsListSearch>(context, listen: false)
+                    .cleanFilms();
                 Navigator.pop(context);
-
               },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );
           },
         ),
         //backwardsCompatibility: false,
-        title: Text('Searched Actors'),
-        backgroundColor: Color(0xFF670974),
+        title: Text('Searched Films'),
+        backgroundColor: Colors.deepPurple,
       ),
-      body: ActorsSearchedItems(),
+      body: FilmsSearchedItems(),
     );
   }
 }

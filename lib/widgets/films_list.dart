@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors.dart';
-import 'package:kino_actor/models/actors_list_search.dart';
+import 'package:kino_actor/models/films_list_counter.dart';
+import 'package:kino_actor/models/list_counter.dart';
+import 'package:kino_actor/models/films.dart';
 import 'package:provider/provider.dart';
 
-class ActorsSearchedItems extends StatefulWidget {
-  ActorsSearchedItems({Key? key}) : super(key: key);
+class FilmsList extends StatefulWidget {
+  FilmsList({Key? key}) : super(key: key);
 
   @override
-  _ActorsSearchedItemsState createState() => _ActorsSearchedItemsState();
+  _FilmsListState createState() => _FilmsListState();
 }
 
-class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
+class _FilmsListState extends State<FilmsList> {
   final ScrollController _controller = ScrollController();
 
   @override
@@ -22,26 +23,27 @@ class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
   _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      context.read<ActorsListSearch>().increment();
+      context.read<FilmsListCounter>().increment();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Actors> peoples = context.watch<ActorsListSearch>().allPeople;
-    if (context.watch<ActorsListSearch>().isNextExist) {
+    List<Films> films = context.watch<FilmsListCounter>().allFilms;
+    print('length: ${films.length}');
+    print('next: ${context.watch<ListCounter>().isNextExist}');
+    if (context.watch<ListCounter>().isNextExist && films.length == 10) {
       return GridView.builder(
         controller: _controller,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
+          crossAxisCount: 2,
         ),
-        itemCount: peoples.length + 1,
+        itemCount: films.length + 1,
         itemBuilder: (context, index) {
-          if (peoples.length == 0) {
-            context.read<ActorsListSearch>().increment();
+          if (films.length == 0) {
+            context.read<FilmsListCounter>().increment();
           }
-
-          if (peoples.length == index) {
+          if (films.length == index && films.length % 10 == 0) {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -49,9 +51,12 @@ class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
             return Padding(
               padding: EdgeInsets.all(10),
               child: Container(
-                color: Colors.blueAccent,
+                color: Colors.purple,
                 child: Text(
-                  peoples[index].name,
+                  films[index].title,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             );
@@ -63,15 +68,14 @@ class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
+                crossAxisCount: 2,
               ),
-              itemCount: peoples.length + 1,
+              itemCount: films.length + 1,
               itemBuilder: (context, index) {
-                if (peoples.length == 0) {
-                  context.read<ActorsListSearch>().increment();
+                if (films.length == 0) {
+                  context.read<FilmsListCounter>().increment();
                 }
-                //print(context.read<SearchedActorsListCounter>().keywordText);
-                if (peoples.length == index) {
+                if (films.length == index) {
                   return Center(
                     child: Text('No more data'),
                   );
@@ -79,9 +83,12 @@ class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
                   return Padding(
                     padding: EdgeInsets.all(10),
                     child: Container(
-                      color: Colors.blueAccent,
+                      color: Colors.black,
                       child: Text(
-                        peoples[index].name,
+                        films[index].title,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   );

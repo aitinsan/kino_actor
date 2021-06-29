@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors.dart';
-import 'package:kino_actor/models/actors_list_search.dart';
+import 'package:kino_actor/models/films.dart';
+import 'package:kino_actor/models/films_list_search.dart';
 import 'package:provider/provider.dart';
 
-class ActorsSearchedItems extends StatefulWidget {
-  ActorsSearchedItems({Key? key}) : super(key: key);
+class FilmsSearchedItems extends StatefulWidget {
+  FilmsSearchedItems({Key? key}) : super(key: key);
 
   @override
-  _ActorsSearchedItemsState createState() => _ActorsSearchedItemsState();
+  _FilmsSearchedItemsState createState() => _FilmsSearchedItemsState();
 }
 
-class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
+class _FilmsSearchedItemsState extends State<FilmsSearchedItems> {
   final ScrollController _controller = ScrollController();
 
   @override
@@ -22,39 +22,41 @@ class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
   _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      context.read<ActorsListSearch>().increment();
+      context.read<FilmsListSearch>().increment();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Actors> peoples = context.watch<ActorsListSearch>().allPeople;
-    if (context.watch<ActorsListSearch>().isNextExist) {
+    List<Films> films = context.watch<FilmsListSearch>().allFilms;
+    print('this is the film length $films.length');
+    if (context.watch<FilmsListSearch>().isNextExist && films.length == 10) {
       return GridView.builder(
         controller: _controller,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
         ),
-        itemCount: peoples.length + 1,
+        itemCount: films.length + 1,
         itemBuilder: (context, index) {
-          if (peoples.length == 0) {
-            context.read<ActorsListSearch>().increment();
+          if (films.length == 0) {
+            context.read<FilmsListSearch>().increment();
           }
 
-          if (peoples.length == index) {
+          if (films.length == index )  {
+
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else
+          } else{
             return Padding(
               padding: EdgeInsets.all(10),
               child: Container(
                 color: Colors.blueAccent,
                 child: Text(
-                  peoples[index].name,
+                  films[index].title,
                 ),
               ),
-            );
+            );}
         },
       );
     } else {
@@ -65,13 +67,12 @@ class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
               ),
-              itemCount: peoples.length + 1,
+              itemCount: films.length + 1,
               itemBuilder: (context, index) {
-                if (peoples.length == 0) {
-                  context.read<ActorsListSearch>().increment();
+                if (films.length == 0) {
+                  context.read<FilmsListSearch>().increment();
                 }
-                //print(context.read<SearchedActorsListCounter>().keywordText);
-                if (peoples.length == index) {
+                if (films.length == index) {
                   return Center(
                     child: Text('No more data'),
                   );
@@ -79,9 +80,9 @@ class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
                   return Padding(
                     padding: EdgeInsets.all(10),
                     child: Container(
-                      color: Colors.blueAccent,
+                      color: Colors.green,
                       child: Text(
-                        peoples[index].name,
+                        films[index].title,
                       ),
                     ),
                   );

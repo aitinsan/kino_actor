@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/models/actors_list_counter.dart';
-import 'package:kino_actor/models/people.dart';
+import 'package:kino_actor/models/list_counter.dart';
+import 'package:kino_actor/models/actors.dart';
 import 'package:provider/provider.dart';
 
 class ActorsList extends StatefulWidget {
@@ -28,8 +29,8 @@ class _ActorsListState extends State<ActorsList> {
 
   @override
   Widget build(BuildContext context) {
-    List<People> peoples = context.watch<ActorsListCounter>().allPeople;
-    if (context.watch<ActorsListCounter>().isNextExist) {
+    List<Actors> peoples = context.watch<ActorsListCounter>().allPeople;
+    if (context.watch<ListCounter>().isNextExist && peoples.length%10 == 0) {
       return GridView.builder(
         controller: _controller,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -40,7 +41,7 @@ class _ActorsListState extends State<ActorsList> {
           if (peoples.length == 0) {
             context.read<ActorsListCounter>().increment();
           }
-          print(context.watch<ActorsListCounter>().isNextExist);
+          print(context.watch<ListCounter>().isNextExist);
           if (peoples.length == index) {
             return Center(
               child: CircularProgressIndicator(),
@@ -70,7 +71,7 @@ class _ActorsListState extends State<ActorsList> {
                 if (peoples.length == 0) {
                   context.read<ActorsListCounter>().increment();
                 }
-                print(context.watch<ActorsListCounter>().isNextExist);
+                print(context.watch<ListCounter>().isNextExist);
                 if (peoples.length == index) {
                   return Center(
                     child: Text('No more data'),
@@ -88,7 +89,6 @@ class _ActorsListState extends State<ActorsList> {
               },
             ),
           ),
-         
         ],
       );
     }

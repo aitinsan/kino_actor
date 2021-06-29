@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors_list_search.dart';
-import 'package:kino_actor/screens/actors_searched_screen.dart';
+import 'package:kino_actor/models/films_list_search.dart';
+import 'package:kino_actor/screens/films_searched_screen.dart';
 import 'package:provider/provider.dart';
 
-class ActorsSearch extends StatefulWidget {
-  ActorsSearch({Key? key}) : super(key: key);
+class FilmsSearch extends StatefulWidget {
+  FilmsSearch({Key? key}) : super(key: key);
 
   @override
-  _ActorsSearchState createState() => _ActorsSearchState();
+  _FilmsSearchState createState() => _FilmsSearchState();
 }
 
-class _ActorsSearchState extends State<ActorsSearch> {
+class _FilmsSearchState extends State<FilmsSearch> {
   var textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -40,14 +40,14 @@ class _ActorsSearchState extends State<ActorsSearch> {
                 color: Colors.black.withAlpha(120),
               ),
               onPressed: () {
-                Provider.of<ActorsListSearch>(context, listen: false)
-                    .cleanPeoples();
-                Provider.of<ActorsListSearch>(context, listen: false)
+                Provider.of<FilmsListSearch>(context, listen: false)
                     .changeSearch(textController.text);
+                Provider.of<FilmsListSearch>(context, listen: false)
+                    .cleanFilms();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ActorsSearchedScreen()),
+                      builder: (context) => FilmsSearchedScreen()),
                 );
               },
             ),

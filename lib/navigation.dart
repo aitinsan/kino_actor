@@ -32,8 +32,7 @@ class _NavigationAppPageState extends State<NavigationAppPage> {
       body: tabs[_currentPage],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.movie), label: 'films'),
+          BottomNavigationBarItem(icon: Icon(Icons.movie), label: 'films'),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_box), label: 'actors'),
         ],

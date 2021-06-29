@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/models/actors_list_counter.dart';
-import 'package:kino_actor/models/searched_list_of_people.dart';
+import 'package:kino_actor/models/actors_list_search.dart';
+import 'package:kino_actor/models/films_list_counter.dart';
+import 'package:kino_actor/models/films_list_search.dart';
+import 'package:kino_actor/models/list_counter.dart';
+import 'package:kino_actor/models/list_search.dart';
+import 'package:kino_actor/navigation.dart';
 import 'package:provider/provider.dart';
-import '../Navigation.dart';
 
 void main() {
   runApp(
@@ -10,13 +14,28 @@ void main() {
     /// can use [MyApp] while mocking the providers
     MultiProvider(
       providers: [
-        
-        ChangeNotifierProvider(create: (_) => ActorsListCounter(),),
-        ChangeNotifierProvider(create: (_) => SearchedActorsListCounter('l'),),
-        
+        //list counters
+        ChangeNotifierProvider(
+          create: (_) => ListCounter(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ActorsListCounter(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FilmsListCounter(),
+        ),
+        //list seacrhes
+        ChangeNotifierProvider(
+          create: (_) => ListSearch(''),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FilmsListSearch(''),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ActorsListSearch(''),
+        ),
       ],
       child: MyApp(),
-      
     ),
   );
 
@@ -29,6 +48,7 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+
 //строю приложение через MaterialApp()
 class _MyAppState extends State<MyApp> {
   @override
@@ -36,8 +56,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Kinoactor',
       //theme:
-      home: NavigationAppPage(initialPage: 'actors',),//MyHomePage(),
+      home: NavigationAppPage(
+        initialPage: 'films',
+      ), //MyHomePage(),
     );
-    
   }
 }
