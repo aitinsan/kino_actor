@@ -1,16 +1,30 @@
-import 'package:kino_actor/constants.dart';
+import 'dart:convert';
+
+import 'package:kino_actor/base/http.dart';
+
 import 'package:kino_actor/models/actors.model.dart';
 import 'package:http/http.dart' as http;
-import 'package:kino_actor/models/actors_response.model.dart';
+import 'package:kino_actor/models/pagination.model.dart';
 
-//для того чтобы достать людей с пейджа
-Future<List<Actors>> fetchPeople(http.Client client, int pageIndex) async {
-  return await ActorsResponse('$ALL_ACTORS_PAGE$pageIndex', client)
-      .someListOfPeople();
-}
+
+
+
+// для того чтобы достать людей с пейджа
+// Future<List<Actors>> getPeople() async {
+//   final query =
+//   final http.Response response = await Http.get('/people',query);
+//   final Pagination pagination = Pagination.fromJson(jsonDecode(response.body));
+
+
+
+//   return pagination.results.map((e) => Actors.fromJson(e)).toList();
+  
+//   /*return await ActorsResponse('$ALL_ACTORS_PAGE$pageIndex', client)
+//       .someListOfPeople();*/
+// }
 
 //функция проверяет есть ли следующая страница
-Future<bool> fetcNext(http.Client client, int pageIndex) async {
+/*Future<bool> fetcNext(http.Client client, int pageIndex) async {
   return await ActorsResponse('$ALL_ACTORS_PAGE$pageIndex', client).isNextExist;
 }
 
@@ -30,3 +44,4 @@ Future<bool> fetchSeacrhNext(
           '$SEARCH_PEOPLE_PAGE$keyword&page=$pageIndex', client)
       .isNextExist;
 }
+*/

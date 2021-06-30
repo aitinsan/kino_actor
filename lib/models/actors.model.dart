@@ -34,7 +34,7 @@ class Actors {
     this.edited,
     this.url,
   );
-
+  
   factory Actors.fromJson(Map<String, dynamic> json) {
     return Actors(
         json['name'] as String,

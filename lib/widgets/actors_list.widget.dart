@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors_list_counter.model.dart';
+import 'package:kino_actor/models/actors_list.viewmodel.dart';
 import 'package:kino_actor/models/app_card.model.dart';
-import 'package:kino_actor/models/list_counter.model.dart';
+import 'package:kino_actor/models/paginator.dart';
 import 'package:kino_actor/models/actors.model.dart';
 import 'package:kino_actor/widgets/card/app_card.widget.dart';
 import 'package:provider/provider.dart';
@@ -25,13 +25,13 @@ class _ActorsListState extends State<ActorsList> {
   _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      context.read<ActorsListCounter>().increment();
+      context.read<ActorsListViewModel>().getNextPage();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Actors> peoples = context.watch<ActorsListCounter>().allPeople;
+    List<Actors> peoples = context.watch<ActorsListViewModel>().allPeople;
     return Column(
       children: [
         Container(
@@ -56,14 +56,14 @@ class _ActorsListState extends State<ActorsList> {
             controller: _controller,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 2
+              childAspectRatio: 1,
             ),
             itemCount: peoples.length + 1,
             itemBuilder: (context, index) {
-              if (context.watch<ListCounter>().isNextExist &&
+              if (context.watch<ActorsListViewModel>().isNextExist &&
                   peoples.length % 10 == 0) {
                 if (peoples.length == 0) {
-                  context.read<ActorsListCounter>().increment();
+                  context.read<ActorsListViewModel>().getNextPage();
                 }
                 if (peoples.length == index) {
                   return Center(
@@ -80,7 +80,7 @@ class _ActorsListState extends State<ActorsList> {
                   
               } else {
                 if (peoples.length == 0) {
-                  context.read<ActorsListCounter>().increment();
+                  context.read<ActorsListViewModel>().getNextPage();
                 }
                 if (peoples.length == index) {
                   return Center(

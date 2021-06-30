@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors_list_counter.model.dart';
+import 'package:kino_actor/models/actors_list.viewmodel.dart';
 import 'package:kino_actor/models/actors_list_search.model.dart';
-import 'package:kino_actor/models/films_list_counter.model.dart';
-import 'package:kino_actor/models/films_list_search.model.dart';
-import 'package:kino_actor/models/list_counter.model.dart';
+
+import 'package:kino_actor/models/paginator.dart';
 import 'package:kino_actor/models/list_search.model.dart';
 import 'package:kino_actor/navigation.dart';
 import 'package:provider/provider.dart';
@@ -15,25 +14,16 @@ void main() {
     MultiProvider(
       providers: [
         //list counters
+        
         ChangeNotifierProvider(
-          create: (_) => ListCounter(),
+          create: (_) => ActorsListViewModel(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => ActorsListCounter(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => FilmsListCounter(),
-        ),
+        
         //list seacrhes
         ChangeNotifierProvider(
           create: (_) => ListSearch(''),
         ),
-        ChangeNotifierProvider(
-          create: (_) => FilmsListSearch(''),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ActorsListSearch(''),
-        ),
+        
       ],
       child: MyApp(),
     ),
