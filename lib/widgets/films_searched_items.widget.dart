@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors_list_counter.dart';
-import 'package:kino_actor/models/list_counter.dart';
-import 'package:kino_actor/models/actors.dart';
+import 'package:kino_actor/models/films.model.dart';
+import 'package:kino_actor/models/films_list_search.model.dart';
 import 'package:provider/provider.dart';
 
-class ActorsList extends StatefulWidget {
-  ActorsList({Key? key}) : super(key: key);
+class FilmsSearchedItems extends StatefulWidget {
+  FilmsSearchedItems({Key? key}) : super(key: key);
 
   @override
-  _ActorsListState createState() => _ActorsListState();
+  _FilmsSearchedItemsState createState() => _FilmsSearchedItemsState();
 }
 
-class _ActorsListState extends State<ActorsList> {
+class _FilmsSearchedItemsState extends State<FilmsSearchedItems> {
   final ScrollController _controller = ScrollController();
 
   @override
@@ -23,39 +22,41 @@ class _ActorsListState extends State<ActorsList> {
   _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      context.read<ActorsListCounter>().increment();
+      context.read<FilmsListSearch>().increment();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Actors> peoples = context.watch<ActorsListCounter>().allPeople;
-    if (context.watch<ListCounter>().isNextExist && peoples.length%10 == 0) {
+    List<Films> films = context.watch<FilmsListSearch>().allFilms;
+    print('this is the film length $films.length');
+    if (context.watch<FilmsListSearch>().isNextExist && films.length == 10) {
       return GridView.builder(
         controller: _controller,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: 1,
         ),
-        itemCount: peoples.length + 1,
+        itemCount: films.length + 1,
         itemBuilder: (context, index) {
-          if (peoples.length == 0) {
-            context.read<ActorsListCounter>().increment();
+          if (films.length == 0) {
+            context.read<FilmsListSearch>().increment();
           }
-          print(context.watch<ListCounter>().isNextExist);
-          if (peoples.length == index) {
+
+          if (films.length == index )  {
+
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else
+          } else{
             return Padding(
               padding: EdgeInsets.all(10),
               child: Container(
-                color: Colors.amber,
+                color: Colors.blueAccent,
                 child: Text(
-                  peoples[index].name,
+                  films[index].title,
                 ),
               ),
-            );
+            );}
         },
       );
     } else {
@@ -64,15 +65,14 @@ class _ActorsListState extends State<ActorsList> {
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: 1,
               ),
-              itemCount: peoples.length + 1,
+              itemCount: films.length + 1,
               itemBuilder: (context, index) {
-                if (peoples.length == 0) {
-                  context.read<ActorsListCounter>().increment();
+                if (films.length == 0) {
+                  context.read<FilmsListSearch>().increment();
                 }
-                print(context.watch<ListCounter>().isNextExist);
-                if (peoples.length == index) {
+                if (films.length == index) {
                   return Center(
                     child: Text('No more data'),
                   );
@@ -80,9 +80,9 @@ class _ActorsListState extends State<ActorsList> {
                   return Padding(
                     padding: EdgeInsets.all(10),
                     child: Container(
-                      color: Colors.amber,
+                      color: Colors.green,
                       child: Text(
-                        peoples[index].name,
+                        films[index].title,
                       ),
                     ),
                   );

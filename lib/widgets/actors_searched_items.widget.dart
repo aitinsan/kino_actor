@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors.dart';
-import 'package:kino_actor/models/actors_list_search.dart';
+import 'package:kino_actor/models/actors.model.dart';
+import 'package:kino_actor/models/actors_list_search.model.dart';
 import 'package:provider/provider.dart';
 
 class ActorsSearchedItems extends StatefulWidget {
@@ -85,6 +85,14 @@ class _ActorsSearchedItemsState extends State<ActorsSearchedItems> {
                       ),
                     ),
                   );
+
+                  /*return AppCard(
+                    childrenf: [
+                      AppCardRow('name', peoples[index].name),
+                      AppCardRow('age', peoples[index].eyeColor),
+                    ]
+                  )
+                  );*/
               },
             ),
           ),

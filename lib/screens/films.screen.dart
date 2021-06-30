@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/widgets/films_list.dart';
-import 'package:kino_actor/widgets/films_search.dart';
+import 'package:kino_actor/widgets/films_list.widget.dart';
+import 'package:kino_actor/widgets/films_search.widget.dart';
 
 class FilmsPage extends StatefulWidget {
   FilmsPage({Key? key}) : super(key: key);

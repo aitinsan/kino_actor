@@ -1,8 +1,8 @@
-import 'package:kino_actor/models/responce.dart';
+import 'package:kino_actor/models/responce.model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:kino_actor/models/films.dart';
-import 'package:kino_actor/models/films_model_list.dart';
+import 'package:kino_actor/models/films.model.dart';
+import 'package:kino_actor/models/films_model_list.model.dart';
 
 class FilmsResponse extends ResponseClass {
   FilmsResponse(String response, http.Client client) : super(response, client);

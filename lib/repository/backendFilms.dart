@@ -1,7 +1,7 @@
 import 'package:kino_actor/constants.dart';
-import 'package:kino_actor/models/films.dart';
+import 'package:kino_actor/models/films.model.dart';
 import 'package:http/http.dart' as http;
-import 'package:kino_actor/models/films_response.dart';
+import 'package:kino_actor/models/films_response.model.dart';
 
 Future<List<Films>> fetchFilms(http.Client client, int pageIndex) async {
   return await FilmsResponse('$ALL_FILMS_PAGE$pageIndex', client)

@@ -1,5 +1,5 @@
-import 'package:kino_actor/models/list_counter.dart';
-import 'package:kino_actor/models/actors.dart';
+import 'package:kino_actor/models/list_counter.model.dart';
+import 'package:kino_actor/models/actors.model.dart';
 import 'package:kino_actor/repository/backendActors.dart';
 import 'package:http/http.dart' as http;
 

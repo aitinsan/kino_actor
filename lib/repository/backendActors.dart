@@ -1,7 +1,7 @@
 import 'package:kino_actor/constants.dart';
-import 'package:kino_actor/models/actors.dart';
+import 'package:kino_actor/models/actors.model.dart';
 import 'package:http/http.dart' as http;
-import 'package:kino_actor/models/actors_response.dart';
+import 'package:kino_actor/models/actors_response.model.dart';
 
 //для того чтобы достать людей с пейджа
 Future<List<Actors>> fetchPeople(http.Client client, int pageIndex) async {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/films_list_search.dart';
-import 'package:kino_actor/widgets/films_searched_items.dart';
+import 'package:kino_actor/models/films_list_search.model.dart';
+import 'package:kino_actor/widgets/films_searched_items.widget.dart';
 import 'package:provider/provider.dart';
 
 class FilmsSearchedScreen extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:kino_actor/widgets/actors_list.dart';
-import 'package:kino_actor/widgets/actors_search.dart';
+import 'package:kino_actor/widgets/actors_list.widget.dart';
+import 'package:kino_actor/widgets/actors_search.widget.dart';
 
 class ActorsPage extends StatefulWidget {
   ActorsPage({Key? key}) : super(key: key);

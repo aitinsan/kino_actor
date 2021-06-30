@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/films.dart';
-import 'package:kino_actor/models/films_list_search.dart';
+import 'package:kino_actor/models/films_list_counter.model.dart';
+import 'package:kino_actor/models/list_counter.model.dart';
+import 'package:kino_actor/models/films.model.dart';
 import 'package:provider/provider.dart';
 
-class FilmsSearchedItems extends StatefulWidget {
-  FilmsSearchedItems({Key? key}) : super(key: key);
+class FilmsList extends StatefulWidget {
+  FilmsList({Key? key}) : super(key: key);
 
   @override
-  _FilmsSearchedItemsState createState() => _FilmsSearchedItemsState();
+  _FilmsListState createState() => _FilmsListState();
 }
 
-class _FilmsSearchedItemsState extends State<FilmsSearchedItems> {
+class _FilmsListState extends State<FilmsList> {
   final ScrollController _controller = ScrollController();
 
   @override
@@ -22,41 +23,43 @@ class _FilmsSearchedItemsState extends State<FilmsSearchedItems> {
   _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      context.read<FilmsListSearch>().increment();
+      context.read<FilmsListCounter>().increment();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Films> films = context.watch<FilmsListSearch>().allFilms;
-    print('this is the film length $films.length');
-    if (context.watch<FilmsListSearch>().isNextExist && films.length == 10) {
+    List<Films> films = context.watch<FilmsListCounter>().allFilms;
+    print('length: ${films.length}');
+    print('next: ${context.watch<ListCounter>().isNextExist}');
+    if (context.watch<ListCounter>().isNextExist && films.length == 10) {
       return GridView.builder(
         controller: _controller,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
+          crossAxisCount: 2,
         ),
         itemCount: films.length + 1,
         itemBuilder: (context, index) {
           if (films.length == 0) {
-            context.read<FilmsListSearch>().increment();
+            context.read<FilmsListCounter>().increment();
           }
-
-          if (films.length == index )  {
-
+          if (films.length == index && films.length % 10 == 0) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else{
+          } else
             return Padding(
               padding: EdgeInsets.all(10),
               child: Container(
-                color: Colors.blueAccent,
+                color: Colors.purple,
                 child: Text(
                   films[index].title,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            );}
+            );
         },
       );
     } else {
@@ -65,12 +68,12 @@ class _FilmsSearchedItemsState extends State<FilmsSearchedItems> {
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
+                crossAxisCount: 2,
               ),
               itemCount: films.length + 1,
               itemBuilder: (context, index) {
                 if (films.length == 0) {
-                  context.read<FilmsListSearch>().increment();
+                  context.read<FilmsListCounter>().increment();
                 }
                 if (films.length == index) {
                   return Center(
@@ -80,9 +83,12 @@ class _FilmsSearchedItemsState extends State<FilmsSearchedItems> {
                   return Padding(
                     padding: EdgeInsets.all(10),
                     child: Container(
-                      color: Colors.green,
+                      color: Colors.black,
                       child: Text(
                         films[index].title,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   );

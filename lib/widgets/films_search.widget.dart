@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/films_list_search.dart';
-import 'package:kino_actor/screens/films_searched_screen.dart';
+import 'package:kino_actor/models/films_list_search.model.dart';
+import 'package:kino_actor/screens/films_searched.screen.dart';
 import 'package:provider/provider.dart';
 
 class FilmsSearch extends StatefulWidget {

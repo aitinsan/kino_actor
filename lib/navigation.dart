@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/screens/actors.dart';
-import 'package:kino_actor/screens/films.dart';
+import 'package:kino_actor/screens/actors.screen.dart';
+import 'package:kino_actor/screens/films.screen.dart';
 
 //Виджеты для главной страницы с фильмами, актерами и поиском
 class NavigationAppPage extends StatefulWidget {

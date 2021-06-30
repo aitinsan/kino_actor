@@ -1,5 +1,5 @@
-import 'package:kino_actor/models/films.dart';
-import 'package:kino_actor/models/list_search.dart';
+import 'package:kino_actor/models/films.model.dart';
+import 'package:kino_actor/models/list_search.model.dart';
 import 'package:http/http.dart' as http;
 import 'package:kino_actor/repository/backendFilms.dart';
 

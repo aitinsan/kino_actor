@@ -1,5 +1,5 @@
-import 'package:kino_actor/models/pagination.dart';
-import 'package:kino_actor/models/actors.dart';
+import 'package:kino_actor/models/pagination.model.dart';
+import 'package:kino_actor/models/actors.model.dart';
 
 class ActorsModelList extends Pagination {
   List<Actors> results;

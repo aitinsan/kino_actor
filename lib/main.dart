@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors_list_counter.dart';
-import 'package:kino_actor/models/actors_list_search.dart';
-import 'package:kino_actor/models/films_list_counter.dart';
-import 'package:kino_actor/models/films_list_search.dart';
-import 'package:kino_actor/models/list_counter.dart';
-import 'package:kino_actor/models/list_search.dart';
+import 'package:kino_actor/models/actors_list_counter.model.dart';
+import 'package:kino_actor/models/actors_list_search.model.dart';
+import 'package:kino_actor/models/films_list_counter.model.dart';
+import 'package:kino_actor/models/films_list_search.model.dart';
+import 'package:kino_actor/models/list_counter.model.dart';
+import 'package:kino_actor/models/list_search.model.dart';
 import 'package:kino_actor/navigation.dart';
 import 'package:provider/provider.dart';
 
