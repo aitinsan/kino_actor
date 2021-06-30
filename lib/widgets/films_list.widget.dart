@@ -57,6 +57,7 @@ class _FilmsListState extends State<FilmsList> {
             controller: _controller,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
+              childAspectRatio: 2,
             ),
             itemCount: films.length + 1,
             itemBuilder: (context, index) {
@@ -73,6 +74,7 @@ class _FilmsListState extends State<FilmsList> {
                   return AppCard(items: [
                     AppCardItem(
                       films[index].title,
+                      20
                     ),
                   ]);
               } else {
@@ -87,6 +89,7 @@ class _FilmsListState extends State<FilmsList> {
                   return AppCard(items: [
                     AppCardItem(
                       films[index].title,
+                      20
                     ),
                   ]);
               }

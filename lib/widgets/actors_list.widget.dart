@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/models/actors_list_counter.model.dart';
+import 'package:kino_actor/models/app_card.model.dart';
 import 'package:kino_actor/models/list_counter.model.dart';
 import 'package:kino_actor/models/actors.model.dart';
+import 'package:kino_actor/widgets/card/app_card.widget.dart';
 import 'package:provider/provider.dart';
 
 class ActorsList extends StatefulWidget {
@@ -54,6 +56,7 @@ class _ActorsListState extends State<ActorsList> {
             controller: _controller,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
+              childAspectRatio: 2
             ),
             itemCount: peoples.length + 1,
             itemBuilder: (context, index) {
@@ -67,15 +70,14 @@ class _ActorsListState extends State<ActorsList> {
                     child: CircularProgressIndicator(),
                   );
                 } else
-                  return Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Container(
-                      color: Colors.amber,
-                      child: Text(
-                        peoples[index].name,
-                      ),
+                  return 
+                  AppCard(items: [
+                    AppCardItem(
+                      peoples[index].name,
+                      20
                     ),
-                  );
+                  ]);
+                  
               } else {
                 if (peoples.length == 0) {
                   context.read<ActorsListCounter>().increment();
@@ -85,15 +87,12 @@ class _ActorsListState extends State<ActorsList> {
                     child: Text('No more data'),
                   );
                 } else
-                  return Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Container(
-                      color: Colors.amber,
-                      child: Text(
-                        peoples[index].name,
-                      ),
+                  return AppCard(items: [
+                    AppCardItem(
+                      peoples[index].name,
+                      20
                     ),
-                  );
+                  ]);
               }
             },
           ),

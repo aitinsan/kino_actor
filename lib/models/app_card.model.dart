@@ -1,6 +1,6 @@
 class AppCardItem {
   final String? item;
-
-  AppCardItem(this.item);
+  int textFontSize;
+  AppCardItem(this.item, this.textFontSize);
   
 }

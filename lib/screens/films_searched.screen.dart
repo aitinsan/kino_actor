@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kino_actor/colors.dart';
 import 'package:kino_actor/models/films_list_search.model.dart';
 import 'package:kino_actor/widgets/films_searched_items.widget.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class FilmsSearchedScreen extends StatelessWidget {
         ),
         //backwardsCompatibility: false,
         title: Text('Searched Films'),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colours.blackColor,
       ),
       body: FilmsSearchedItems(),
     );

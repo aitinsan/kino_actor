@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:kino_actor/colors.dart';
 import 'package:kino_actor/models/app_card.model.dart';
@@ -16,9 +14,11 @@ class AppCard extends StatelessWidget {
         elevation: 4,
         color: Colours.blackColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(30),
         ),
-        child:  ListView.builder(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
+          child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: items!.length,
               itemBuilder: (context, index) {
@@ -28,12 +28,13 @@ class AppCard extends StatelessWidget {
                     items![index].item.toString(),
                     style: TextStyle(
                       color: Colours.whiteColor,
+                      fontSize: items![index].textFontSize.toDouble(),
                     ),
                   ),
                 );
               }),
         ),
-      
+      ),
     );
   }
 }

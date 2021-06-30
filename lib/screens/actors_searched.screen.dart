@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kino_actor/colors.dart';
 import 'package:kino_actor/models/actors_list_search.model.dart';
 import 'package:kino_actor/widgets/actors_searched_items.widget.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class ActorsSearchedScreen extends StatelessWidget {
         ),
         //backwardsCompatibility: false,
         title: Text('Searched Actors'),
-        backgroundColor: Color(0xFF670974),
+        backgroundColor: Colours.blackColor,
       ),
       body: ActorsSearchedItems(),
     );
