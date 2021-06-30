@@ -4,7 +4,7 @@ class Films {
   final String openingCrawl;
   final String director;
   final String producer;
-  final String eleaseDate;
+  final String releaseDate;
   final List characters;
   final List planets;
   final List starships;
@@ -20,7 +20,7 @@ class Films {
     this.openingCrawl,
     this.director,
     this.producer,
-    this.eleaseDate,
+    this.releaseDate,
     this.characters,
     this.planets,
     this.starships,

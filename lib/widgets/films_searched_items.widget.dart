@@ -29,7 +29,6 @@ class _FilmsSearchedItemsState extends State<FilmsSearchedItems> {
   @override
   Widget build(BuildContext context) {
     List<Films> films = context.watch<FilmsListSearch>().allFilms;
-    print('this is the film length $films.length');
     if (context.watch<FilmsListSearch>().isNextExist && films.length == 10) {
       return GridView.builder(
         controller: _controller,

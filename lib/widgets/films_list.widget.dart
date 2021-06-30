@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kino_actor/models/app_card.model.dart';
 import 'package:kino_actor/models/films_list_counter.model.dart';
 import 'package:kino_actor/models/list_counter.model.dart';
 import 'package:kino_actor/models/films.model.dart';
+import 'package:kino_actor/widgets/card/app_card.widget.dart';
 import 'package:provider/provider.dart';
 
 class FilmsList extends StatefulWidget {
@@ -30,41 +32,136 @@ class _FilmsListState extends State<FilmsList> {
   @override
   Widget build(BuildContext context) {
     List<Films> films = context.watch<FilmsListCounter>().allFilms;
-    print('length: ${films.length}');
-    print('next: ${context.watch<ListCounter>().isNextExist}');
-    if (context.watch<ListCounter>().isNextExist && films.length == 10) {
-      return GridView.builder(
-        controller: _controller,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+    return Column(
+      children: [
+        Container(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 7),
+              child: Text(
+                'All Starwars Movies:',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+          ),
         ),
-        itemCount: films.length + 1,
-        itemBuilder: (context, index) {
-          if (films.length == 0) {
-            context.read<FilmsListCounter>().increment();
-          }
-          if (films.length == index && films.length % 10 == 0) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else
-            return Padding(
-              padding: EdgeInsets.all(10),
-              child: Container(
-                color: Colors.purple,
+        const Divider(
+          height: 3,
+          thickness: 2,
+          indent: 10,
+          endIndent: 10,
+        ),
+        Expanded(
+          child: GridView.builder(
+            scrollDirection: Axis.vertical,
+            controller: _controller,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemCount: films.length + 1,
+            itemBuilder: (context, index) {
+              if (context.watch<ListCounter>().isNextExist &&
+                  films.length == 10) {
+                if (films.length == 0) {
+                  context.read<FilmsListCounter>().increment();
+                }
+                if (films.length == index && films.length % 10 == 0) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else
+                  return AppCard(items: [
+                    AppCardItem(
+                      films[index].title,
+                    ),
+                  ]);
+              } else {
+                if (films.length == 0) {
+                  context.read<FilmsListCounter>().increment();
+                }
+                if (films.length == index) {
+                  return Center(
+                    child: Text('No more data'),
+                  );
+                } else
+                  return AppCard(items: [
+                    AppCardItem(
+                      films[index].title,
+                    ),
+                  ]);
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+  /*if (context.watch<ListCounter>().isNextExist && films.length == 10) {
+      return Column(
+        children: [
+          Container(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 7),
                 child: Text(
-                  films[index].title,
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
+                  'All Starwars movies:',
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
-            );
-        },
+            ),
+          ),
+          const Divider(
+            height: 3,
+            thickness: 2,
+            indent: 10,
+            endIndent: 10,
+          ),
+          Expanded(
+            child: GridView.builder(
+              controller: _controller,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: films.length + 1,
+              itemBuilder: (context, index) {
+                if (films.length == 0) {
+                  context.read<FilmsListCounter>().increment();
+                }
+                if (films.length == index && films.length % 10 == 0) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else
+                  return AppCard(items: [
+                    AppCardItem(
+                      films[index].title,
+                    ),
+                  ]);
+              },
+            ),
+          ),
+        ],
       );
     } else {
       return Column(
         children: [
+          Container(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 7),
+                child: Text(
+                  'All Starwars movies:',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+          ),
+          const Divider(
+            height: 3,
+            thickness: 2,
+            indent: 10,
+            endIndent: 10,
+          ),
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -80,23 +177,14 @@ class _FilmsListState extends State<FilmsList> {
                     child: Text('No more data'),
                   );
                 } else
-                  return Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Container(
-                      color: Colors.black,
-                      child: Text(
-                        films[index].title,
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+                  return AppCard(items: [
+                    AppCardItem(
+                      films[index].title,
                     ),
-                  );
+                  ]);
               },
             ),
           ),
         ],
-      );
-    }
-  }
+      );*/
 }
