@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors_list.viewmodel.dart';
+import 'package:kino_actor/view_models/actors_list.viewmodel.dart';
 import 'package:kino_actor/models/app_card.model.dart';
 import 'package:kino_actor/models/paginator.dart';
 import 'package:kino_actor/models/actors.model.dart';
@@ -31,7 +31,7 @@ class _ActorsListState extends State<ActorsList> {
 
   @override
   Widget build(BuildContext context) {
-    List<Actors> peoples = context.watch<ActorsListViewModel>().allPeople;
+    List<Actor> peoples = context.watch<ActorsListViewModel>().allPeople;
     return Column(
       children: [
         Container(

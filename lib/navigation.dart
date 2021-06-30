@@ -22,7 +22,7 @@ class _NavigationAppPageState extends State<NavigationAppPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'films': ActorsPage(),//FilmsPage(),
+      'films': FilmsPage(),
       'actors': ActorsPage(),
     };
     return Scaffold(

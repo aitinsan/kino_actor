@@ -10,20 +10,20 @@ import 'package:kino_actor/repository/backendActors.dart';
 
 class ActorsListViewModel extends ChangeNotifier{
   
-  late List<Actors> _allPeople;
+  late List<Actor> _allPeople;
   late Paginator _paginator;
   ActorsListViewModel(){
     _allPeople = [];
     _paginator = Paginator();
   }
   
-  List<Actors> get allPeople => _allPeople;
+  List<Actor> get allPeople => _allPeople;
   
   void getNextPage() async {
     
     final Pagination pagination = await _paginator.getNextPage('/people');
 
-    _allPeople += pagination.results.map((e) => Actors.fromJson(e)).toList();
+    _allPeople += pagination.results.map((e) => Actor.fromJson(e)).toList();
     notifyListeners();
   }
   bool get isNextExist => _paginator.isNextExists;

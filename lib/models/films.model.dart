@@ -1,4 +1,4 @@
-class Films {
+class Film {
   final String title;
   final int episodeId;
   final String openingCrawl;
@@ -14,7 +14,7 @@ class Films {
   final String edited;
   final String url;
 
-  Films(
+  Film(
     this.title,
     this.episodeId,
     this.openingCrawl,
@@ -31,8 +31,8 @@ class Films {
     this.url,
   );
 
-  factory Films.fromJson(Map<String, dynamic> json) {
-    return Films(
+  factory Film.fromJson(Map<String, dynamic> json) {
+    return Film(
         json['title'],
         json['episode_id'],
         json['opening_crawl'],

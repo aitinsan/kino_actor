@@ -1,4 +1,4 @@
-class Actors {
+class Actor {
   final String name;
   final String heigth;
   final String mass;
@@ -16,7 +16,7 @@ class Actors {
   final String edited;
   final String url;
 
-  Actors(
+  Actor(
     this.name,
     this.heigth,
     this.mass,
@@ -35,8 +35,8 @@ class Actors {
     this.url,
   );
   
-  factory Actors.fromJson(Map<String, dynamic> json) {
-    return Actors(
+  factory Actor.fromJson(Map<String, dynamic> json) {
+    return Actor(
         json['name'] as String,
         json['height'] as String,
         json['mass'] as String,

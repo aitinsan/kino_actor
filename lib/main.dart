@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors_list.viewmodel.dart';
-import 'package:kino_actor/models/actors_list_search.model.dart';
-
-import 'package:kino_actor/models/paginator.dart';
+import 'package:kino_actor/view_models/actors_list.viewmodel.dart';
 import 'package:kino_actor/models/list_search.model.dart';
 import 'package:kino_actor/navigation.dart';
+import 'package:kino_actor/view_models/films_list.viewmodel.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -18,7 +16,9 @@ void main() {
         ChangeNotifierProvider(
           create: (_) => ActorsListViewModel(),
         ),
-        
+        ChangeNotifierProvider(
+          create: (_) => FilmsListViewModel(),
+        ),
         //list seacrhes
         ChangeNotifierProvider(
           create: (_) => ListSearch(''),
