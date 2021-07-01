@@ -30,7 +30,9 @@ class _FilmsListState extends State<FilmsList> {
 
   @override
   Widget build(BuildContext context) {
-    List<Film> films = context.watch<FilmListViewModel>().allFilms;
+    final FilmListViewModel watchContext = context.watch<FilmListViewModel>();
+    final FilmListViewModel readContext = context.read<FilmListViewModel>();
+    List<Film> films = watchContext.allFilms;
     return Column(
       children: [
         Container(
@@ -63,7 +65,7 @@ class _FilmsListState extends State<FilmsList> {
               if (context.watch<FilmListViewModel>().doesNextExist &&
                   films.length == 10) {
                 if (films.length == 0) {
-                  context.read<FilmListViewModel>().getNextPage();
+                  readContext.getNextPage();
                 }
                 if (films.length == index && films.length % 10 == 0) {
                   return Center(
@@ -75,7 +77,7 @@ class _FilmsListState extends State<FilmsList> {
                   ]);
               } else {
                 if (films.length == 0) {
-                  context.read<FilmListViewModel>().getNextPage();
+                  readContext.getNextPage();
                 }
                 if (films.length == index) {
                   return Center(
