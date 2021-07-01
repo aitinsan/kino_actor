@@ -14,7 +14,7 @@ class ActorList extends StatefulWidget {
 }
 
 class _ActorListState extends State<ActorList> {
-  final ScrollController _controller = ScrollController();
+  final ScrollController _controller = ScrollController(initialScrollOffset: 50.0);
 
   @override
   void initState() {
@@ -33,13 +33,14 @@ class _ActorListState extends State<ActorList> {
   void _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      widget.vm.getNextPage();
+      
     }
   }
 
   Widget pageListFunction(BuildContext context, int index) {
     if (widget.vm.allPeople.length == index) {
       if (widget.vm.doesNextExist) {
+        widget.vm.getNextPage();
         return Center(
           child: CircularProgressIndicator(),
         );
@@ -78,18 +79,23 @@ class _ActorListState extends State<ActorList> {
           endIndent: 10,
         ),
         Expanded(
-          child: GridView.builder(
-            controller: _controller,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 2,
+
+            child: GridView.builder(
+              
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1,
+              ),
+              itemCount:
+                  widget.vm.allPeople.length + 1, //peopleLength(context),
+              itemBuilder: (context, index) {
+                return Center(
+                  child: pageListFunction(context, index),
+                );
+              },
             ),
-            itemCount: widget.vm.allPeople.length + 1, //peopleLength(context),
-            itemBuilder: (context, index) {
-              return pageListFunction(context, index);
-            },
           ),
-        ),
+        
       ],
     );
   }

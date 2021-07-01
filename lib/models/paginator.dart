@@ -10,7 +10,7 @@ class Paginator {
   bool _doesNextExists = true;
   int get pageIndexNumber => _pageIndex;
   bool get doesNextExists => _doesNextExists;
-  Future<AppPage> getNextPage(url,query) async {
+  Future<AppPage> getNextPage({url,query}) async {
     _pageIndex++;
     final fullQuery= '$query$_pageIndex';
     final http.Response response = await Http.get(url, fullQuery);

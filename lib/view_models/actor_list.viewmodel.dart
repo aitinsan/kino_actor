@@ -15,8 +15,8 @@ class ActorListViewModel extends ChangeNotifier {
 
   void getNextPage() async {
     final AppPage pagination = await _paginator.getNextPage(
-      '/people',
-      'page=',
+      url:'/people',
+      query:'page=',
     );
 
     _allPeople += pagination.results.map((e) => Actor.fromJson(e)).toList();

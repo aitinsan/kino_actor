@@ -16,8 +16,8 @@ class FilmListViewModel extends ChangeNotifier {
 
   void getNextPage() async {
     final AppPage pagination = await _paginator.getNextPage(
-      '/films',
-      'page=',
+      url: '/films',
+      query:'page=',
     );
 
     _allFilms += pagination.results.map((e) => Film.fromJson(e)).toList();
