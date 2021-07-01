@@ -1,29 +1,29 @@
-class Pagination {
+class AppPage<T> {
   int? count;
   var next;
   var previous;
 
-  List results;
+  List<T> results;
 
-  Pagination({
+  AppPage({
     this.count,
     this.next,
     this.previous,
     required this.results,
   });
 
-  factory Pagination.fromJson(
+  factory AppPage.fromJson(
     Map<String, dynamic> json,
   ) {
     //T itemConverter
     //проверяет на нулл не нулл
-    final results = json['results'] == null ? [] : json['results'] as List;
+    //final results = json['results'] == null ? [] as List<T> : json['results'] as List<T>;
 
-    return Pagination(
+    return AppPage(
       count: json['count'],
       next: json['next'],
       previous: json['previous'],
-      results: results,
+      results: json['results'] == null ? [] as List<T> : json['results'] as List<T>,
     );
   }
 }

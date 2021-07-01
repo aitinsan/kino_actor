@@ -1,5 +1,5 @@
 import 'package:kino_actor/constants.dart';
-import 'package:kino_actor/models/films.model.dart';
+import 'package:kino_actor/models/film.model.dart';
 import 'package:http/http.dart' as http;
 
 /*

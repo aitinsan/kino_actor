@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:kino_actor/base/http.dart';
 
-import 'package:kino_actor/models/actors.model.dart';
+import 'package:kino_actor/models/actor.model.dart';
 import 'package:http/http.dart' as http;
-import 'package:kino_actor/models/pagination.model.dart';
+import 'package:kino_actor/models/app_page.model.dart';
 
 
 
