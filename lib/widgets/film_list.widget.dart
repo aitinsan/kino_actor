@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/widgets/card/app_card.model.dart';
-import 'package:kino_actor/models/film.model.dart';
 import 'package:kino_actor/view_models/film_list.viewmodel.dart';
 import 'package:kino_actor/widgets/card/app_card.widget.dart';
-import 'package:provider/provider.dart';
 
 class FilmsList extends StatefulWidget {
-  final FilmListViewModel vm; 
+  final FilmListViewModel vm;
   FilmsList({Key? key, required this.vm}) : super(key: key);
 
   @override
@@ -16,10 +14,8 @@ class FilmsList extends StatefulWidget {
 class _FilmsListState extends State<FilmsList> {
   final ScrollController _controller = ScrollController();
 
-
   @override
   void initState() {
-    
     super.initState();
     _controller.addListener(_onScroll);
   }
@@ -32,34 +28,52 @@ class _FilmsListState extends State<FilmsList> {
     }
   }
 
+  @override
+  void dispose() {
+    _controller.removeListener(_onScroll);
+    _controller.dispose();
+
+    super.dispose();
+  }
+
   void _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      widget.vm.getNextPage();
+      if (widget.vm.doesNextExist) {
+        widget.vm.getNextPage();
+      }
     }
   }
+
   Widget pageListFunction(BuildContext context, int index) {
-    if (widget.vm.allFilms.length == index) {
-      if (widget.vm.doesNextExist) {
-        return Center(
-          child: CircularProgressIndicator(),
+    if (_controller.hasClients) {
+      if (widget.vm.allFilms.length == index) {
+        if (widget.vm.doesNextExist) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return Center(
+            child: Text('No more films'),
+          );
+        }
+      } else
+        return AppCard(
+          items: [
+            AppCardItem(
+                item: widget.vm.allFilms[index].title, textFontSize: 20),
+          ],
         );
-      } else {
-        return Center(
-          child: Text('No more films'),
-        );
-      }
-    } else
-      return AppCard(
-        items: [
-          AppCardItem(item: widget.vm.allFilms[index].title, textFontSize: 20),
-        ],
+    } else {
+      widget.vm.getNextPage();
+      return Center(
+        child: CircularProgressIndicator(),
       );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return Column(
       children: [
         Container(
