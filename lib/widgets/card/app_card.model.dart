@@ -3,4 +3,5 @@ class AppCardItem {
   int textFontSize;
   AppCardItem(this.item, this.textFontSize);
   
+
 }

@@ -17,12 +17,11 @@ class _FilmsListState extends State<FilmsList> {
 
   @override
   void initState() {
-    
     _controller.addListener(_onScroll);
     super.initState();
   }
 
-  _onScroll() {
+  void _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
       context.read<FilmListViewModel>().getNextPage();
