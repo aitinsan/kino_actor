@@ -18,7 +18,9 @@ class _FilmsPageState extends State<FilmsPage> {
         Expanded(
           child: ChangeNotifierProvider<FilmListViewModel>(
             create: (context) => FilmListViewModel(),
-            child: FilmsList(),
+            child: Consumer<FilmListViewModel>(
+              builder: (context, vm, _) => FilmsList(vm: vm),
+            ),
           ),
         ),
       ],

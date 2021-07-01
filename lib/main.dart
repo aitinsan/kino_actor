@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/view_models/actor_list.viewmodel.dart';
-import 'package:kino_actor/models/list_search.model.dart';
 import 'package:kino_actor/navigation.dart';
-import 'package:kino_actor/view_models/film_list.viewmodel.dart';
-import 'package:provider/provider.dart';
+
 
 void main() {
   /*runApp(
@@ -45,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Kinoactor',
       //theme:
       home: NavigationAppPage(
-        initialPage: 'actors',
+        initialPage: Tabs.ActorsPage,
       ), //MyHomePage(),
     );
   }

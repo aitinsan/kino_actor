@@ -24,7 +24,9 @@ class _ActorsPageState extends State<ActorsPage> {
         Expanded(
           child: ChangeNotifierProvider<ActorListViewModel>(
             create: (context) => ActorListViewModel(),
-            child: ActorList(),
+            child: Consumer<ActorListViewModel>(
+              builder: (context, vm, _) => ActorList(vm: vm),
+            ),
           ),
         ),
       ],

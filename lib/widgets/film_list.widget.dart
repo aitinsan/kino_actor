@@ -6,7 +6,8 @@ import 'package:kino_actor/widgets/card/app_card.widget.dart';
 import 'package:provider/provider.dart';
 
 class FilmsList extends StatefulWidget {
-  FilmsList({Key? key}) : super(key: key);
+  final FilmListViewModel vm; 
+  FilmsList({Key? key, required this.vm}) : super(key: key);
 
   @override
   _FilmsListState createState() => _FilmsListState();
@@ -15,24 +16,50 @@ class FilmsList extends StatefulWidget {
 class _FilmsListState extends State<FilmsList> {
   final ScrollController _controller = ScrollController();
 
+
   @override
   void initState() {
-    _controller.addListener(_onScroll);
+    
     super.initState();
+    _controller.addListener(_onScroll);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (widget.vm.allFilms.isEmpty) {
+      widget.vm.getNextPage();
+    }
   }
 
   void _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      context.read<FilmListViewModel>().getNextPage();
+      widget.vm.getNextPage();
     }
+  }
+  Widget pageListFunction(BuildContext context, int index) {
+    if (widget.vm.allFilms.length == index) {
+      if (widget.vm.doesNextExist) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      } else {
+        return Center(
+          child: Text('No more films'),
+        );
+      }
+    } else
+      return AppCard(
+        items: [
+          AppCardItem(item: widget.vm.allFilms[index].title, textFontSize: 20),
+        ],
+      );
   }
 
   @override
   Widget build(BuildContext context) {
-    final FilmListViewModel watchContext = context.watch<FilmListViewModel>();
-    final FilmListViewModel readContext = context.read<FilmListViewModel>();
-    List<Film> films = watchContext.allFilms;
+    
     return Column(
       children: [
         Container(
@@ -60,34 +87,9 @@ class _FilmsListState extends State<FilmsList> {
               crossAxisCount: 2,
               childAspectRatio: 2,
             ),
-            itemCount: films.length + 1,
+            itemCount: widget.vm.allFilms.length + 1,
             itemBuilder: (context, index) {
-              if (context.watch<FilmListViewModel>().doesNextExist &&
-                  films.length == 10) {
-                if (films.length == 0) {
-                  readContext.getNextPage();
-                }
-                if (films.length == index && films.length % 10 == 0) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else
-                  return AppCard(items: [
-                    AppCardItem(films[index].title, 20),
-                  ]);
-              } else {
-                if (films.length == 0) {
-                  readContext.getNextPage();
-                }
-                if (films.length == index) {
-                  return Center(
-                    child: Text('No more data'),
-                  );
-                } else
-                  return AppCard(items: [
-                    AppCardItem(films[index].title, 20),
-                  ]);
-              }
+              return pageListFunction(context, index);
             },
           ),
         ),

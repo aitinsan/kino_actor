@@ -6,39 +6,58 @@ import 'package:kino_actor/widgets/card/app_card.widget.dart';
 import 'package:provider/provider.dart';
 
 class ActorList extends StatefulWidget {
-  ActorList({Key? key}) : super(key: key);
-  
+  final ActorListViewModel vm;
+  ActorList({Key? key, required this.vm}) : super(key: key);
+
   @override
   _ActorListState createState() => _ActorListState();
 }
 
 class _ActorListState extends State<ActorList> {
   final ScrollController _controller = ScrollController();
-  
+
   @override
   void initState() {
-    
-    _controller.addListener(_onScroll);
     super.initState();
+    _controller.addListener(_onScroll);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (widget.vm.allPeople.isEmpty) {
+      widget.vm.getNextPage();
+    }
   }
 
   void _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      context.read<ActorListViewModel>().getNextPage();
+      widget.vm.getNextPage();
     }
+  }
+
+  Widget pageListFunction(BuildContext context, int index) {
+    if (widget.vm.allPeople.length == index) {
+      if (widget.vm.doesNextExist) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      } else {
+        return Center(
+          child: Text('No more data'),
+        );
+      }
+    } else
+      return AppCard(
+        items: [
+          AppCardItem(item: widget.vm.allPeople[index].name, textFontSize: 20),
+        ],
+      );
   }
 
   @override
   Widget build(BuildContext context) {
-    final ActorListViewModel watchContext = context.watch<ActorListViewModel>();
-    final ActorListViewModel readContext = context.read<ActorListViewModel>();
-    final List<Actor> peoples = watchContext.allPeople;
     return Column(
       children: [
         Container(
@@ -63,35 +82,11 @@ class _ActorListState extends State<ActorList> {
             controller: _controller,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 1,
+              childAspectRatio: 2,
             ),
-            itemCount: peoples.length + 1,
+            itemCount: widget.vm.allPeople.length + 1, //peopleLength(context),
             itemBuilder: (context, index) {
-              if (watchContext.doesNextExist && peoples.length % 10 == 0) {
-                if (peoples.length == 0) {
-                  readContext.getNextPage();
-                }
-                if (peoples.length == index) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else
-                  return AppCard(items: [
-                    AppCardItem(peoples[index].name, 20),
-                  ]);
-              } else {
-                if (peoples.length == 0) {
-                  readContext.getNextPage();
-                }
-                if (peoples.length == index) {
-                  return Center(
-                    child: Text('No more data'),
-                  );
-                } else
-                  return AppCard(items: [
-                    AppCardItem(peoples[index].name, 20),
-                  ]);
-              }
+              return pageListFunction(context, index);
             },
           ),
         ),

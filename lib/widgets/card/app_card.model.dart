@@ -1,7 +1,7 @@
 class AppCardItem {
-  final String? item;
+  String item;
   int textFontSize;
-  AppCardItem(this.item, this.textFontSize);
+  AppCardItem({required this.item, required this.textFontSize});
   
 
 }
