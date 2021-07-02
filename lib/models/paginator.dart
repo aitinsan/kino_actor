@@ -24,5 +24,6 @@ class Paginator {
 
   void cleanPage() {
     _pageIndex = 0;
+    print(pageIndexNumber);
   }
 }

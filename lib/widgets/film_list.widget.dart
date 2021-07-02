@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kino_actor/colors.dart';
 import 'package:kino_actor/widgets/card/app_card.model.dart';
@@ -13,14 +15,17 @@ class FilmsList extends StatefulWidget {
 }
 
 class _FilmsListState extends State<FilmsList> {
+  late Timer _debounce;
   final ScrollController _controller = ScrollController();
   late TextEditingController _textController;
-  late String _keyword;
 
   @override
   void initState() {
     super.initState();
-    _keyword = '';
+    _debounce = Timer(
+      const Duration(milliseconds: 500),
+      () {},
+    );
     _textController = TextEditingController();
     _controller.addListener(_onScroll);
   }
@@ -28,24 +33,35 @@ class _FilmsListState extends State<FilmsList> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.vm.allFilms.isEmpty) {
-      widget.vm.getSearchedFilmsNextPage(_keyword);
+    if (widget.vm.allFilms.isEmpty && _textController.text == '') {
+      widget.vm.getSearchedFilmsNextPage(_textController.text);
     }
   }
 
-  // @override
-  // void dispose() {
-  //   _controller.removeListener(_onScroll);
-  //   _controller.dispose();
+  void _onSearchChanged(String query) {
+    if (_debounce.isActive) _debounce.cancel();
+    _debounce = Timer(
+      const Duration(milliseconds: 500),
+      () {
+        widget.vm.cleanFilmList();
+        widget.vm.getSearchedFilmsNextPage(_textController.text);
+      },
+    );
+  }
 
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _controller.removeListener(_onScroll);
+    _controller.dispose();
+    _textController.dispose();
+    super.dispose();
+  }
 
   void _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
       if (widget.vm.doesNextExist) {
-        widget.vm.getSearchedFilmsNextPage(_keyword);
+        widget.vm.getSearchedFilmsNextPage(_textController.text);
       }
     }
   }
@@ -66,11 +82,18 @@ class _FilmsListState extends State<FilmsList> {
         return AppCard(
           items: [
             AppCardItem(
-                item: widget.vm.allFilms[index].title, textFontSize: 20),
+                item: widget.vm.allFilms[index].title +
+                    ' ' +
+                    widget.vm.allFilms[index].episodeId.toString(),
+                textFontSize: 20),
+            AppCardItem(
+                item: widget.vm.allFilms[index].releaseDate,
+                textFontSize: 14,
+                colour: Colors.grey),
           ],
         );
     } else {
-      widget.vm.getSearchedFilmsNextPage(_keyword);
+      widget.vm.getSearchedFilmsNextPage(_textController.text);
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -111,7 +134,7 @@ class _FilmsListState extends State<FilmsList> {
                           ),
                           border: InputBorder.none,
                         ),
-                        onChanged: (String keyword) {},
+                        onChanged: _onSearchChanged,
                       ),
                     ),
                   ),
@@ -124,10 +147,9 @@ class _FilmsListState extends State<FilmsList> {
                       ),
                       onPressed: () {
                         widget.vm.cleanFilmList();
-                        setState(() {
-                          _keyword = _textController.text;
-                        });
-                        widget.vm.getSearchedFilmsNextPage(_keyword);
+
+                        widget.vm
+                            .getSearchedFilmsNextPage(_textController.text);
                       },
                     ),
                   ),
@@ -154,12 +176,10 @@ class _FilmsListState extends State<FilmsList> {
           endIndent: 10,
         ),
         Expanded(
-          
           child: GridView.builder(
-            
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
-              childAspectRatio: 4,
+              childAspectRatio: 5,
             ),
             controller: _controller,
             itemCount: widget.vm.allFilms.length + 1,

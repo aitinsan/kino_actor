@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 class AppCardItem {
   String item;
   int textFontSize;
-  AppCardItem({required this.item, required this.textFontSize});
+  Color? colour;
+  AppCardItem({required this.item, required this.textFontSize, this.colour});
+  
 }

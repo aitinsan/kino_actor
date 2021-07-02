@@ -24,13 +24,14 @@ class _NavigationAppPageState extends State<NavigationAppPage> {
     _currentPage = widget.initialPage;
   }
 
-  final _tabs = {
-    Tabs.ActorsPage: ActorsPage(),
-    Tabs.FilmsPage: FilmsPage(),
-  };
+  
 
   @override
   Widget build(BuildContext context) {
+    final _tabs = {
+    Tabs.ActorsPage: ActorsPage(),
+    Tabs.FilmsPage: FilmsPage(),
+  };
     return Scaffold(
       body: _tabs[_currentPage],
       bottomNavigationBar: BottomNavigationBar(

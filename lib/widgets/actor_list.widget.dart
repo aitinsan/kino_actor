@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:kino_actor/colors.dart';
 import 'package:kino_actor/view_models/actor_list.viewmodel.dart';
 import 'package:kino_actor/widgets/card/app_card.model.dart';
 import 'package:kino_actor/widgets/card/app_card.widget.dart';
+import 'package:flutter/foundation.dart';
 
 class ActorList extends StatefulWidget {
   final ActorListViewModel vm;
@@ -17,14 +20,17 @@ class ActorList extends StatefulWidget {
 }
 
 class _ActorListState extends State<ActorList> {
+  late Timer _debounce;
   final ScrollController _controller =
       ScrollController(initialScrollOffset: 50.0);
-  late String _keyword;
   late TextEditingController _textController;
   @override
   void initState() {
     super.initState();
-    _keyword = '';
+    _debounce = Timer(
+      const Duration(milliseconds: 500),
+      () {},
+    );
     _textController = TextEditingController();
     _controller.addListener(_onScroll);
   }
@@ -33,26 +39,36 @@ class _ActorListState extends State<ActorList> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (widget.vm.allPeople.isEmpty) {
-      widget.vm.getSearchedPeopleNextPage(_keyword);
+      widget.vm.getSearchedPeopleNextPage(_textController.text);
     }
+  }
+
+  @override
+  void dispose() {
+    _debounce.cancel();
+    _controller.removeListener(_onScroll);
+    _controller.dispose();
+    _textController.dispose();
+    super.dispose();
   }
 
   void _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
       if (widget.vm.doesNextExist) {
-        widget.vm.getSearchedPeopleNextPage(_keyword);
+        widget.vm.getSearchedPeopleNextPage(_textController.text);
       }
     }
   }
 
-  // @override
-  // void dispose() {
-  //   _controller.removeListener(_onScroll);
-  //   _controller.dispose();
-  //   _textController.dispose();
-  //   super.dispose();
-  // }
+  void _onSearchChanged(String query) {
+    if (_debounce.isActive) _debounce.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      widget.vm.cleanAllPeopleList();
+      widget.vm.getSearchedPeopleNextPage(_textController.text);
+
+    });
+  }
 
   Widget pageListFunction(BuildContext context, int index) {
     if (_controller.hasClients) {
@@ -76,7 +92,7 @@ class _ActorListState extends State<ActorList> {
           ],
         );
     } else {
-      widget.vm.getSearchedPeopleNextPage(_keyword);
+      //widget.vm.getSearchedPeopleNextPage(_keyword);
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -116,7 +132,7 @@ class _ActorListState extends State<ActorList> {
                         ),
                         border: InputBorder.none,
                       ),
-                      onChanged: (String keyword) {},
+                      onChanged: _onSearchChanged,
                     ),
                   ),
                 ),
@@ -129,10 +145,8 @@ class _ActorListState extends State<ActorList> {
                     ),
                     onPressed: () {
                       widget.vm.cleanAllPeopleList();
-                      setState(() {
-                        _keyword = _textController.text;
-                      });
-                      widget.vm.getSearchedPeopleNextPage(_keyword);
+
+                      widget.vm.getSearchedPeopleNextPage(_textController.text);
                     },
                   ),
                 ),
@@ -161,10 +175,10 @@ class _ActorListState extends State<ActorList> {
           child: GridView.builder(
             controller: _controller,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 2,
+              crossAxisCount: 1,
+              childAspectRatio: 7,
             ),
-            itemCount: widget.vm.allPeople.length + 1, 
+            itemCount: widget.vm.allPeople.length + 1,
             itemBuilder: (context, index) {
               return Center(
                 child: pageListFunction(context, index),
