@@ -1,8 +1,8 @@
 import 'package:kino_actor/constants.dart';
-import 'package:kino_actor/models/films.model.dart';
+import 'package:kino_actor/models/film.model.dart';
 import 'package:http/http.dart' as http;
-import 'package:kino_actor/models/films_response.model.dart';
 
+/*
 Future<List<Films>> fetchFilms(http.Client client, int pageIndex) async {
   return await FilmsResponse('$ALL_FILMS_PAGE$pageIndex', client)
       .someListOfFilms();
@@ -29,3 +29,4 @@ Future<bool> fetchSeacrhNext(
           '$SEARCH_FILMS_PAGE$keyword&page=$pageIndex', client)
       .isNextExist;
 }
+*/

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/colors.dart';
-import 'package:kino_actor/models/app_card.model.dart';
+import 'package:kino_actor/widgets/card/app_card.model.dart';
 
 class AppCard extends StatelessWidget {
   final List<AppCardItem>? items;

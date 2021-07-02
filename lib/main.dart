@@ -1,45 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/models/actors_list_counter.model.dart';
-import 'package:kino_actor/models/actors_list_search.model.dart';
-import 'package:kino_actor/models/films_list_counter.model.dart';
-import 'package:kino_actor/models/films_list_search.model.dart';
-import 'package:kino_actor/models/list_counter.model.dart';
-import 'package:kino_actor/models/list_search.model.dart';
 import 'package:kino_actor/navigation.dart';
-import 'package:provider/provider.dart';
+
 
 void main() {
-  runApp(
-    /// Providers are above [MyApp] instead of inside it, so that tests
-    /// can use [MyApp] while mocking the providers
+  /*runApp(
     MultiProvider(
       providers: [
         //list counters
+        
+        // ChangeNotifierProvider(
+        //   create: (_) => ActorListViewModel(),
+        // ),
         ChangeNotifierProvider(
-          create: (_) => ListCounter(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ActorsListCounter(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => FilmsListCounter(),
+          create: (_) => FilmsListViewModel(),
         ),
         //list seacrhes
-        ChangeNotifierProvider(
+        /*ChangeNotifierProvider(
           create: (_) => ListSearch(''),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => FilmsListSearch(''),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ActorsListSearch(''),
-        ),
+        ),*/
+        
       ],
       child: MyApp(),
     ),
-  );
+  );*/
 
-  //runApp(MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -57,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Kinoactor',
       //theme:
       home: NavigationAppPage(
-        initialPage: 'films',
+        initialPage: Tabs.ActorsPage,
       ), //MyHomePage(),
     );
   }
