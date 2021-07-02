@@ -33,13 +33,13 @@ class _FilmsListState extends State<FilmsList> {
     }
   }
 
-  @override
-  void dispose() {
-    _controller.removeListener(_onScroll);
-    _controller.dispose();
+  // @override
+  // void dispose() {
+  //   _controller.removeListener(_onScroll);
+  //   _controller.dispose();
 
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
 
   void _onScroll() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
@@ -154,8 +154,13 @@ class _FilmsListState extends State<FilmsList> {
           endIndent: 10,
         ),
         Expanded(
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
+          
+          child: GridView.builder(
+            
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+              childAspectRatio: 4,
+            ),
             controller: _controller,
             itemCount: widget.vm.allFilms.length + 1,
             itemBuilder: (context, index) {

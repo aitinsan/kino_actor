@@ -46,13 +46,13 @@ class _ActorListState extends State<ActorList> {
     }
   }
 
-  @override
-  void dispose() {
-    _controller.removeListener(_onScroll);
-    _controller.dispose();
-    _textController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.removeListener(_onScroll);
+  //   _controller.dispose();
+  //   _textController.dispose();
+  //   super.dispose();
+  // }
 
   Widget pageListFunction(BuildContext context, int index) {
     if (_controller.hasClients) {
@@ -164,7 +164,7 @@ class _ActorListState extends State<ActorList> {
               crossAxisCount: 2,
               childAspectRatio: 2,
             ),
-            itemCount: widget.vm.allPeople.length + 1,
+            itemCount: widget.vm.allPeople.length + 1, 
             itemBuilder: (context, index) {
               return Center(
                 child: pageListFunction(context, index),
