@@ -164,7 +164,7 @@ class _ActorListState extends State<ActorList> {
               crossAxisCount: 2,
               childAspectRatio: 2,
             ),
-            itemCount: widget.vm.allPeople.length + 1, //peopleLength(context),
+            itemCount: widget.vm.allPeople.length + 1,
             itemBuilder: (context, index) {
               return Center(
                 child: pageListFunction(context, index),

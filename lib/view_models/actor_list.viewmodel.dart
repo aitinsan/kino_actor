@@ -12,16 +12,7 @@ class ActorListViewModel extends ChangeNotifier {
   }
 
   List<Actor> get allPeople => _allPeople;
-  ////достает весь список людей
-  // void getAllPeopleNextPage() async {
-  //   final AppPage pagination = await _paginator.getNextPage(
-  //     url: '/people',
-  //     query: 'page=',
-  //   );
-
-  //   extendAllPeopleList(pagination);
-  // }
-
+  
   //достает список людей по поиску
   void getSearchedPeopleNextPage(String keyboard) async {
     final AppPage pagination = await _paginator.getNextPage(

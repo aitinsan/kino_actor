@@ -154,13 +154,9 @@ class _FilmsListState extends State<FilmsList> {
           endIndent: 10,
         ),
         Expanded(
-          child: GridView.builder(
+          child: ListView.builder(
             scrollDirection: Axis.vertical,
             controller: _controller,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 2,
-            ),
             itemCount: widget.vm.allFilms.length + 1,
             itemBuilder: (context, index) {
               return pageListFunction(context, index);
