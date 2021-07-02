@@ -23,7 +23,6 @@ class AppCard extends StatelessWidget {
               itemCount: items!.length,
               itemBuilder: (context, index) {
                 return Container(
-                  //color: Colours.blackColor,
                   child: Text(
                     items![index].item.toString(),
                     style: TextStyle(

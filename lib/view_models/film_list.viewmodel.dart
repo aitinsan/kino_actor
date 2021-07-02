@@ -13,15 +13,31 @@ class FilmListViewModel extends ChangeNotifier {
   }
 
   List<Film> get allFilms => _allFilms;
+  //// достает список людей 
+  // void getAllFilmsNextPage() async {
+  //   final AppPage pagination = await _paginator.getNextPage(
+  //     url: '/films',
+  //     query: 'page=',
+  //   );
 
-  void getNextPage() async {
+  //   extendAllPeopleList(pagination);
+  // }
+  //// достает список людей по поиску 
+  void getSearchedFilmsNextPage(String keyboard) async {
     final AppPage pagination = await _paginator.getNextPage(
-      url: '/films',
-      query:'page=',
+      url:'/films',
+      query:'search=$keyboard&page=',
     );
-
+    extendAllPeopleList(pagination);
+    
+  }
+  void extendAllPeopleList(final AppPage pagination){
     _allFilms += pagination.results.map((e) => Film.fromJson(e)).toList();
     notifyListeners();
+  }
+  void cleanFilmList(){
+    _paginator.cleanPage();
+    _allFilms = [];
   }
 
   bool get doesNextExist => _paginator.doesNextExists;

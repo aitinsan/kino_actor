@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kino_actor/colors.dart';
 import 'package:kino_actor/widgets/card/app_card.model.dart';
 import 'package:kino_actor/view_models/film_list.viewmodel.dart';
 import 'package:kino_actor/widgets/card/app_card.widget.dart';
@@ -13,10 +14,14 @@ class FilmsList extends StatefulWidget {
 
 class _FilmsListState extends State<FilmsList> {
   final ScrollController _controller = ScrollController();
+  late TextEditingController _textController;
+  late String _keyword;
 
   @override
   void initState() {
     super.initState();
+    _keyword = '';
+    _textController = TextEditingController();
     _controller.addListener(_onScroll);
   }
 
@@ -24,7 +29,7 @@ class _FilmsListState extends State<FilmsList> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (widget.vm.allFilms.isEmpty) {
-      widget.vm.getNextPage();
+      widget.vm.getSearchedFilmsNextPage(_keyword);
     }
   }
 
@@ -40,7 +45,7 @@ class _FilmsListState extends State<FilmsList> {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
       if (widget.vm.doesNextExist) {
-        widget.vm.getNextPage();
+        widget.vm.getSearchedFilmsNextPage(_keyword);
       }
     }
   }
@@ -65,7 +70,7 @@ class _FilmsListState extends State<FilmsList> {
           ],
         );
     } else {
-      widget.vm.getNextPage();
+      widget.vm.getSearchedFilmsNextPage(_keyword);
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -76,6 +81,61 @@ class _FilmsListState extends State<FilmsList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(10, 70, 10, 0),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colours.whiteColor,
+              borderRadius: new BorderRadius.circular(50),
+            ),
+            child: Container(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      child: TextField(
+                        controller: _textController,
+                        decoration: InputDecoration(
+                          hintText: "Search Films",
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (String keyword) {},
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        widget.vm.cleanFilmList();
+                        setState(() {
+                          _keyword = _textController.text;
+                        });
+                        widget.vm.getSearchedFilmsNextPage(_keyword);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
         Container(
           child: Center(
             child: Padding(
