@@ -87,20 +87,14 @@ class _ActorListState extends State<ActorList> {
         }
       } else
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: 1, color: AppTheme.lightTheme.primaryColor),
-              ),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
             child: ElevatedButton(
               style: ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(0),
-                  overlayColor:
-                      MaterialStateProperty.all<Color>(AppTheme.lightTheme.scaffoldBackgroundColor),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(AppTheme.lightTheme.cardColor)),
+                  overlayColor: MaterialStateProperty.all<Color>(
+                      AppTheme.lightTheme.scaffoldBackgroundColor),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      AppTheme.lightTheme.cardColor)),
               child: AppCard(
                 items: [
                   AppCardItem(
@@ -121,7 +115,7 @@ class _ActorListState extends State<ActorList> {
                 );
               },
             ),
-          ),
+          
         );
     } else {
       widget.vm.getSearchedPeopleNextPage(_textController.text);
@@ -136,12 +130,13 @@ class _ActorListState extends State<ActorList> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
           child: Container(
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: AppTheme.lightTheme.scaffoldBackgroundColor.withOpacity(0.5),
+                  color: AppTheme.lightTheme.scaffoldBackgroundColor
+                      .withOpacity(0.5),
                   spreadRadius: 3,
                   blurRadius: 5,
                   offset: Offset(0, 3), // changes position of shadow
@@ -189,7 +184,6 @@ class _ActorListState extends State<ActorList> {
         Expanded(
           flex: 1,
           child: GridView.builder(
-            addRepaintBoundaries: false,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
               childAspectRatio: 5,

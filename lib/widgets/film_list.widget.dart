@@ -80,13 +80,8 @@ class _FilmsListState extends State<FilmsList> {
         }
       } else
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: 1, color: AppTheme.lightTheme.primaryColor),
-              ),
-            ),
+          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+          
             child: ElevatedButton(
               style: ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(0),
@@ -115,7 +110,7 @@ class _FilmsListState extends State<FilmsList> {
                 );
               },
             ),
-          ),
+          
         );
     } else {
       widget.vm.getSearchedFilmsNextPage(_textController.text);
@@ -130,7 +125,7 @@ class _FilmsListState extends State<FilmsList> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
           child: Container(
             decoration: BoxDecoration(
               boxShadow: [
