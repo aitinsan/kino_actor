@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/colors.dart';
+import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/screens/actors_page.screen.dart';
 import 'package:kino_actor/screens/films_page.screen.dart';
 
@@ -40,10 +40,10 @@ class _NavigationAppPageState extends State<NavigationAppPage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.account_box), label: 'actors'),
         ],
-        backgroundColor: Colours.blackColor,
+        backgroundColor:AppTheme.lightTheme.primaryColor,
         currentIndex: _currentPage.index,
-        selectedItemColor: Colours.whiteColor,
-        unselectedItemColor: Colours.whiteColor,
+        selectedItemColor: AppTheme.lightTheme.cardColor,
+        unselectedItemColor: AppTheme.lightTheme.cardColor,
         onTap: (i) => setState(() => _currentPage = Tabs.values[i]),
         showSelectedLabels: true,
         showUnselectedLabels: false,

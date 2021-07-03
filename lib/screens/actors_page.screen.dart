@@ -22,11 +22,20 @@ class _ActorsPageState extends State<ActorsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ActorListViewModel>(
-      create: (context) => ActorListViewModel(),
-      child: Consumer<ActorListViewModel>(
-        builder: (context, vm, _) => ActorList(
-          vm: vm,
+    return Scaffold(
+      //backgroundColor: Colors.green,
+      appBar: AppBar(
+        title: Text('Characters',style: TextStyle(color: Colors.black,fontSize: 20),),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: ChangeNotifierProvider<ActorListViewModel>(
+        create: (context) => ActorListViewModel(),
+        child: Consumer<ActorListViewModel>(
+          builder: (context, vm, _) => ActorList(
+            vm: vm,
+          ),
         ),
       ),
     );

@@ -13,10 +13,25 @@ class FilmsPage extends StatefulWidget {
 class _FilmsPageState extends State<FilmsPage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<FilmListViewModel>(
-      create: (context) => FilmListViewModel(),
-      child: Consumer<FilmListViewModel>(
-        builder: (context, vm, _) => FilmsList(vm: vm),
+    return Scaffold(
+      //backgroundColor: Colors.black12,
+      appBar: AppBar(
+        title: Text(
+          'Films',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: ChangeNotifierProvider<FilmListViewModel>(
+        create: (context) => FilmListViewModel(),
+        child: Consumer<FilmListViewModel>(
+          builder: (context, vm, _) => FilmsList(vm: vm),
+        ),
       ),
     );
   }

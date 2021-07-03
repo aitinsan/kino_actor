@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/navigation.dart';
 
 void main() {
@@ -18,7 +19,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Kinoactor',
-      //theme:
+      
+      theme: AppTheme.lightTheme,
+      
       home: NavigationAppPage(
         initialPage: Tabs.ActorsPage,
       ), //MyHomePage(),

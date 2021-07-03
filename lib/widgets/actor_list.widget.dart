@@ -1,12 +1,11 @@
 import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kino_actor/colors.dart';
+import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/view_models/actor_list.viewmodel.dart';
 import 'package:kino_actor/widgets/card/app_card.model.dart';
 import 'package:kino_actor/widgets/card/app_card.widget.dart';
 import 'package:flutter/foundation.dart';
-import 'package:kino_actor/widgets/details/film_details.widget.dart';
 import 'package:kino_actor/widgets/details/actor_details.widget.dart';
 
 class ActorList extends StatefulWidget {
@@ -24,7 +23,7 @@ class ActorList extends StatefulWidget {
 class _ActorListState extends State<ActorList> {
   late Timer _debounce;
   final ScrollController _controller =
-      ScrollController(initialScrollOffset: 50.0);
+      ScrollController(initialScrollOffset: 0.0);
   late TextEditingController _textController;
   @override
   void initState() {
@@ -60,6 +59,9 @@ class _ActorListState extends State<ActorList> {
       if (widget.vm.doesNextExist) {
         widget.vm.getSearchedPeopleNextPage(_textController.text);
       }
+      Center(
+        child: CircularProgressIndicator(),
+      );
     }
   }
 
@@ -79,20 +81,47 @@ class _ActorListState extends State<ActorList> {
             child: CircularProgressIndicator(),
           );
         } else {
-          return Expanded(
-            child: Center(
-              child: Text('No more data'),
-            ),
+          return Center(
+            child: Text('No more data'),
           );
         }
       } else
-        return AppCard(
-          items: [
-            AppCardItem(
-              item: widget.vm.allPeople[index].name,
-              textFontSize: 20,
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(width: 1, color: AppTheme.lightTheme.primaryColor),
+              ),
             ),
-          ],
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  elevation: MaterialStateProperty.all<double>(0),
+                  overlayColor:
+                      MaterialStateProperty.all<Color>(AppTheme.lightTheme.scaffoldBackgroundColor),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(AppTheme.lightTheme.cardColor)),
+              child: AppCard(
+                items: [
+                  AppCardItem(
+                    title: widget.vm.allPeople[index].name,
+                    textFontSize: 18,
+                    colour: AppTheme.lightTheme.primaryColor,
+                  ),
+                ],
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ActorDetails(
+                      actor: widget.vm.allPeople[index],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         );
     } else {
       widget.vm.getSearchedPeopleNextPage(_textController.text);
@@ -107,18 +136,18 @@ class _ActorListState extends State<ActorList> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 70, 10, 0),
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
           child: Container(
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: AppTheme.lightTheme.scaffoldBackgroundColor.withOpacity(0.5),
                   spreadRadius: 3,
                   blurRadius: 5,
                   offset: Offset(0, 3), // changes position of shadow
                 ),
               ],
-              color: Colours.whiteColor,
+              color: AppTheme.lightTheme.cardColor,
               borderRadius: new BorderRadius.circular(50),
             ),
             child: Row(
@@ -131,7 +160,7 @@ class _ActorListState extends State<ActorList> {
                       decoration: InputDecoration(
                         hintText: "Search characters",
                         hintStyle: TextStyle(
-                          color: Colors.black,
+                          color: AppTheme.lightTheme.primaryColor,
                         ),
                         border: InputBorder.none,
                       ),
@@ -144,7 +173,7 @@ class _ActorListState extends State<ActorList> {
                   child: IconButton(
                     icon: Icon(
                       Icons.search,
-                      color: Colors.black,
+                      color: AppTheme.lightTheme.primaryColor,
                     ),
                     onPressed: () {
                       widget.vm.cleanAllPeopleList();
@@ -157,50 +186,19 @@ class _ActorListState extends State<ActorList> {
             ),
           ),
         ),
-        Container(
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 7),
-              child: Text(
-                'All Starwars Characters:',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ),
-        ),
-        const Divider(
-          height: 3,
-          thickness: 2,
-          indent: 10,
-          endIndent: 10,
-        ),
         Expanded(
+          flex: 1,
           child: GridView.builder(
             addRepaintBoundaries: false,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
-              childAspectRatio: 4,
+              childAspectRatio: 5,
             ),
             controller: _controller,
             itemCount: widget.vm.allPeople.length + 1,
             itemBuilder: (context, index) {
-              return ElevatedButton(
-                style: ButtonStyle(
-                    overlayColor:
-                        MaterialStateProperty.all<Color>(Colours.blackColor),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colours.whiteColor)),
+              return GridTile(
                 child: pageListFunction(context, index),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ActorDetails(
-                        actor: widget.vm.allPeople[index],
-                      ),
-                    ),
-                  );
-                },
               );
             },
           ),

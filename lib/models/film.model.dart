@@ -10,8 +10,8 @@ class Film {
   final List starships;
   final List vehicles;
   final List species;
-  final String created;
-  final String edited;
+  final DateTime created;
+  final DateTime edited;
   final String url;
 
   Film({
@@ -44,8 +44,8 @@ class Film {
         starships: json['starships'],
         vehicles: json['vehicles'],
         species: json['species'],
-        created: json['created'],
-        edited: json['edited'],
+        created: DateTime.parse(json['created'].toString()),
+        edited: DateTime.parse(json['edited'].toString()),
         url: json['url']);
   }
 }
