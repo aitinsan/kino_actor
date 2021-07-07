@@ -12,15 +12,27 @@ class ActorListViewModel extends ChangeNotifier {
   }
 
   List<Actor> get allPeople => _allPeople;
-
-  void getNextPage() async {
+  
+  //достает список людей по поиску
+  void getSearchedPeopleNextPage(String keyboard) async {
     final AppPage pagination = await _paginator.getNextPage(
-      url:'/people',
-      query:'page=',
+      url: '/people',
+      query: 'search=$keyboard&page=',
     );
 
+    extendAllPeopleList(pagination);
+  }
+
+  //расширяет список актеров. использую в getAllPeopleNextPage() и getSearchedPeopleNextPage()
+  void extendAllPeopleList(final AppPage pagination) {
     _allPeople += pagination.results.map((e) => Actor.fromJson(e)).toList();
     notifyListeners();
+  }
+
+  void cleanAllPeopleList() {
+    _paginator.cleanPage();
+    _allPeople = [];
+
   }
 
   bool get doesNextExist => _paginator.doesNextExists;

@@ -13,17 +13,11 @@ class FilmsPage extends StatefulWidget {
 class _FilmsPageState extends State<FilmsPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: ChangeNotifierProvider<FilmListViewModel>(
-            create: (context) => FilmListViewModel(),
-            child: Consumer<FilmListViewModel>(
-              builder: (context, vm, _) => FilmsList(vm: vm),
-            ),
-          ),
-        ),
-      ],
+    return ChangeNotifierProvider<FilmListViewModel>(
+      create: (context) => FilmListViewModel(),
+      child: Consumer<FilmListViewModel>(
+        builder: (context, vm, _) => FilmsList(vm: vm),
+      ),
     );
   }
 }

@@ -8,33 +8,27 @@ class AppCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(3),
-      child: Card(
-        elevation: 4,
-        color: Colours.blackColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
+    return  Card(
+        elevation: 2,
+        color: Colours.whiteColor,
         child: Padding(
-          padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
+          padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: items!.length,
               itemBuilder: (context, index) {
                 return Container(
-                  //color: Colours.blackColor,
                   child: Text(
                     items![index].item.toString(),
                     style: TextStyle(
-                      color: Colours.whiteColor,
+                      color: Colours.blackColor,
                       fontSize: items![index].textFontSize.toDouble(),
                     ),
                   ),
                 );
               }),
         ),
-      ),
+      
     );
   }
 }

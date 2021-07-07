@@ -1,29 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/navigation.dart';
 
-
 void main() {
-  /*runApp(
-    MultiProvider(
-      providers: [
-        //list counters
-        
-        // ChangeNotifierProvider(
-        //   create: (_) => ActorListViewModel(),
-        // ),
-        ChangeNotifierProvider(
-          create: (_) => FilmsListViewModel(),
-        ),
-        //list seacrhes
-        /*ChangeNotifierProvider(
-          create: (_) => ListSearch(''),
-        ),*/
-        
-      ],
-      child: MyApp(),
-    ),
-  );*/
-
   runApp(MyApp());
 }
 
