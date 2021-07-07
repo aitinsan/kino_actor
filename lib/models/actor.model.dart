@@ -12,8 +12,8 @@ class Actor {
   final List species;
   final List vehicles;
   final List starships;
-  final String created;
-  final String edited;
+  final DateTime created;
+  final DateTime edited;
   final String url;
 
   Actor({
@@ -50,8 +50,8 @@ class Actor {
         species: json['species'] as List,
         vehicles: json['vehicles'] as List,
         starships: json['starships'] as List,
-        created: json['created'] as String,
-        edited: json['edited'] as String,
+        created: DateTime.parse(json['created'].toString()),
+        edited: DateTime.parse(json['edited'].toString()),
         url: json['url'] as String);
   }
 }

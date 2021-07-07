@@ -1,12 +1,16 @@
 import 'dart:ui';
 
+import 'package:kino_actor/lightTheme.dart';
+
 class AppCardItem {
-  String item;
+  String title;
   int textFontSize;
-  Color? colour;
+  String? subTitle;
+  Color? colour = AppTheme.lightTheme.cardColor;
   AppCardItem({
-    required this.item,
+    required this.title,
     required this.textFontSize,
     this.colour,
+    this.subTitle = '',
   });
 }

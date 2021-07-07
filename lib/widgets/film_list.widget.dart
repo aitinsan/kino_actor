@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:kino_actor/colors.dart';
+import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/widgets/card/app_card.model.dart';
 import 'package:kino_actor/view_models/film_list.viewmodel.dart';
 import 'package:kino_actor/widgets/card/app_card.widget.dart';
@@ -80,18 +79,38 @@ class _FilmsListState extends State<FilmsList> {
           );
         }
       } else
-        return AppCard(
-          items: [
-            AppCardItem(
-                item: widget.vm.allFilms[index].title +
-                    ' ' +
-                    widget.vm.allFilms[index].episodeId.toString(),
-                textFontSize: 20),
-            AppCardItem(
-                item: widget.vm.allFilms[index].releaseDate,
-                textFontSize: 14,
-                colour: Colors.grey),
-          ],
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+          
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  elevation: MaterialStateProperty.all<double>(0),
+                  overlayColor:
+                      MaterialStateProperty.all<Color>(AppTheme.lightTheme.scaffoldBackgroundColor),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(AppTheme.lightTheme.cardColor)),
+              child: AppCard(
+                items: [
+                  AppCardItem(
+                    title: widget.vm.allFilms[index].title,
+                    textFontSize: 18,
+                    colour: AppTheme.lightTheme.primaryColor,
+                    subTitle: widget.vm.allFilms[index].releaseDate,
+                  ),
+                ],
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FilmDetails(
+                      film: widget.vm.allFilms[index],
+                    ),
+                  ),
+                );
+              },
+            ),
+          
         );
     } else {
       widget.vm.getSearchedFilmsNextPage(_textController.text);
@@ -106,103 +125,67 @@ class _FilmsListState extends State<FilmsList> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 70, 10, 0),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
           child: Container(
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: AppTheme.lightTheme.scaffoldBackgroundColor.withOpacity(0.5),
                   spreadRadius: 3,
                   blurRadius: 5,
                   offset: Offset(0, 3), // changes position of shadow
                 ),
               ],
-              color: Colours.whiteColor,
+              color: AppTheme.lightTheme.cardColor,
               borderRadius: new BorderRadius.circular(50),
             ),
-            child: Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                      child: TextField(
-                        controller: _textController,
-                        decoration: InputDecoration(
-                          hintText: "Search Films",
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: InputBorder.none,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: TextField(
+                      controller: _textController,
+                      decoration: InputDecoration(
+                        hintText: "Search characters",
+                        hintStyle: TextStyle(
+                          color: AppTheme.lightTheme.primaryColor,
                         ),
-                        onChanged: _onSearchChanged,
+                        border: InputBorder.none,
                       ),
+                      onChanged: _onSearchChanged,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.search,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        widget.vm.cleanFilmList();
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.search,
+                      color: AppTheme.lightTheme.primaryColor,
+                    ),
+                    onPressed: () {
+                      widget.vm.cleanFilmList();
 
-                        widget.vm
-                            .getSearchedFilmsNextPage(_textController.text);
-                      },
-                    ),
+                      widget.vm.getSearchedFilmsNextPage(_textController.text);
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ),
-        Container(
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 7),
-              child: Text(
-                'All Starwars Movies:',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ),
-        ),
-        const Divider(
-          height: 3,
-          thickness: 2,
-          indent: 10,
-          endIndent: 10,
         ),
         Expanded(
+          flex: 1,
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
-              childAspectRatio: 5,
+              childAspectRatio: 4.5,
             ),
             controller: _controller,
             itemCount: widget.vm.allFilms.length + 1,
             itemBuilder: (context, index) {
-              return ElevatedButton(
-                style: ButtonStyle(
-                    overlayColor:
-                        MaterialStateProperty.all<Color>(Colours.blackColor),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colours.whiteColor)),
-                child: pageListFunction(context, index),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FilmDetails(
-                        film: widget.vm.allFilms[index],
-                      ),
-                    ),
-                  );
-                },
-              );
+              return pageListFunction(context, index);
             },
           ),
         ),
