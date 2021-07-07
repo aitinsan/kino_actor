@@ -5,6 +5,7 @@ import 'package:kino_actor/colors.dart';
 import 'package:kino_actor/widgets/card/app_card.model.dart';
 import 'package:kino_actor/view_models/film_list.viewmodel.dart';
 import 'package:kino_actor/widgets/card/app_card.widget.dart';
+import 'package:kino_actor/widgets/details/film_details.widget.dart';
 
 class FilmsList extends StatefulWidget {
   final FilmListViewModel vm;
@@ -184,7 +185,24 @@ class _FilmsListState extends State<FilmsList> {
             controller: _controller,
             itemCount: widget.vm.allFilms.length + 1,
             itemBuilder: (context, index) {
-              return pageListFunction(context, index);
+              return ElevatedButton(
+                style: ButtonStyle(
+                    overlayColor:
+                        MaterialStateProperty.all<Color>(Colours.blackColor),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colours.whiteColor)),
+                child: pageListFunction(context, index),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FilmDetails(
+                        film: widget.vm.allFilms[index],
+                      ),
+                    ),
+                  );
+                },
+              );
             },
           ),
         ),

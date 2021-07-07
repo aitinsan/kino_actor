@@ -6,6 +6,8 @@ import 'package:kino_actor/view_models/actor_list.viewmodel.dart';
 import 'package:kino_actor/widgets/card/app_card.model.dart';
 import 'package:kino_actor/widgets/card/app_card.widget.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kino_actor/widgets/details/film_details.widget.dart';
+import 'package:kino_actor/widgets/details/actor_details.widget.dart';
 
 class ActorList extends StatefulWidget {
   final ActorListViewModel vm;
@@ -66,7 +68,6 @@ class _ActorListState extends State<ActorList> {
     _debounce = Timer(const Duration(milliseconds: 500), () {
       widget.vm.cleanAllPeopleList();
       widget.vm.getSearchedPeopleNextPage(_textController.text);
-
     });
   }
 
@@ -78,8 +79,10 @@ class _ActorListState extends State<ActorList> {
             child: CircularProgressIndicator(),
           );
         } else {
-          return Center(
-            child: Text('No more data'),
+          return Expanded(
+            child: Center(
+              child: Text('No more data'),
+            ),
           );
         }
       } else
@@ -92,7 +95,7 @@ class _ActorListState extends State<ActorList> {
           ],
         );
     } else {
-      //widget.vm.getSearchedPeopleNextPage(_keyword);
+      widget.vm.getSearchedPeopleNextPage(_textController.text);
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -173,15 +176,31 @@ class _ActorListState extends State<ActorList> {
         ),
         Expanded(
           child: GridView.builder(
-            controller: _controller,
+            addRepaintBoundaries: false,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
-              childAspectRatio: 7,
+              childAspectRatio: 4,
             ),
+            controller: _controller,
             itemCount: widget.vm.allPeople.length + 1,
             itemBuilder: (context, index) {
-              return Center(
+              return ElevatedButton(
+                style: ButtonStyle(
+                    overlayColor:
+                        MaterialStateProperty.all<Color>(Colours.blackColor),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colours.whiteColor)),
                 child: pageListFunction(context, index),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ActorDetails(
+                        actor: widget.vm.allPeople[index],
+                      ),
+                    ),
+                  );
+                },
               );
             },
           ),
