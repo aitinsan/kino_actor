@@ -5,7 +5,7 @@ import 'package:kino_actor/widgets/details/deteils_row.dart';
 import 'package:kino_actor/widgets/divider.dart';
 
 class ActorDetails extends StatelessWidget {
-  Actor actor;
+  final Actor actor;
   ActorDetails({Key? key, required this.actor}) : super(key: key);
 
   @override
@@ -17,17 +17,17 @@ class ActorDetails extends StatelessWidget {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: AppTheme.lightTheme.primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: AppTheme.lightTheme.scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         title: Text(
           actor.name,
-          style: TextStyle(color: AppTheme.lightTheme.primaryColor),
+          style: TextStyle(color: Theme.of(context).primaryColor),
         ),
       ),
       body: Padding(
@@ -37,7 +37,7 @@ class ActorDetails extends StatelessWidget {
             borderRadius: BorderRadius.circular(15.0),
           ),
           borderOnForeground: false,
-          color: AppTheme.lightTheme.cardColor,
+          color: Theme.of(context).cardColor,
           child: Padding(
             padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
             child: Column(

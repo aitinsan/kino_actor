@@ -80,26 +80,14 @@ class _FilmsListState extends State<FilmsList> {
         }
       } else
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
-          
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  elevation: MaterialStateProperty.all<double>(0),
-                  overlayColor:
-                      MaterialStateProperty.all<Color>(AppTheme.lightTheme.scaffoldBackgroundColor),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(AppTheme.lightTheme.cardColor)),
-              child: AppCard(
-                items: [
-                  AppCardItem(
-                    title: widget.vm.allFilms[index].title,
-                    textFontSize: 18,
-                    colour: AppTheme.lightTheme.primaryColor,
-                    subTitle: widget.vm.allFilms[index].releaseDate,
-                  ),
-                ],
-              ),
-              onPressed: () {
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          child: Material(
+            elevation: 0,
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            child: InkWell(
+              
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -109,8 +97,21 @@ class _FilmsListState extends State<FilmsList> {
                   ),
                 );
               },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: AppCard(
+                  items: [
+                    AppCardItem(
+                      title: widget.vm.allFilms[index].title,
+                      textFontSize: 18,
+                      colour: Theme.of(context).primaryColor,
+                      subTitle: widget.vm.allFilms[index].releaseDate,
+                    ),
+                  ],
+                ),
+              ),
             ),
-          
+          ),
         );
     } else {
       widget.vm.getSearchedFilmsNextPage(_textController.text);
@@ -130,13 +131,14 @@ class _FilmsListState extends State<FilmsList> {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: AppTheme.lightTheme.scaffoldBackgroundColor.withOpacity(0.5),
+                  color: Theme.of(context).scaffoldBackgroundColor
+                      .withOpacity(0.5),
                   spreadRadius: 3,
                   blurRadius: 5,
                   offset: Offset(0, 3), // changes position of shadow
                 ),
               ],
-              color: AppTheme.lightTheme.cardColor,
+              color: Theme.of(context).cardColor,
               borderRadius: new BorderRadius.circular(50),
             ),
             child: Row(
@@ -149,7 +151,7 @@ class _FilmsListState extends State<FilmsList> {
                       decoration: InputDecoration(
                         hintText: "Search characters",
                         hintStyle: TextStyle(
-                          color: AppTheme.lightTheme.primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                         border: InputBorder.none,
                       ),
@@ -162,7 +164,7 @@ class _FilmsListState extends State<FilmsList> {
                   child: IconButton(
                     icon: Icon(
                       Icons.search,
-                      color: AppTheme.lightTheme.primaryColor,
+                      color: Theme.of(context).primaryColor,
                     ),
                     onPressed: () {
                       widget.vm.cleanFilmList();
@@ -177,11 +179,11 @@ class _FilmsListState extends State<FilmsList> {
         ),
         Expanded(
           flex: 1,
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              childAspectRatio: 4.5,
-            ),
+          child: ListView.builder(
+            // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //   crossAxisCount: 1,
+            //   childAspectRatio: 4.5,
+            // ),
             controller: _controller,
             itemCount: widget.vm.allFilms.length + 1,
             itemBuilder: (context, index) {

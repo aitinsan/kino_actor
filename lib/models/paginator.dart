@@ -10,7 +10,7 @@ class Paginator {
   bool get doesNextExists => _doesNextExists;
   Future<AppPage> getNextPage({url, query}) async {
     _pageIndex++;
-    final fullQuery = '$query$_pageIndex';
+    final fullQuery = '$query&page=$_pageIndex';
     final http.Response response = await Http.get(url, fullQuery);
 
     final AppPage pagination = AppPage.fromJson(jsonDecode(response.body));
