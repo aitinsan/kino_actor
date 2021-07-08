@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/scheduler.dart';
+import 'package:kino_actor/animation_slider/icon_painter.dart';
 import 'package:kino_actor/animation_slider/radio_button_painter.dart';
-import 'package:kino_actor/lightTheme.dart';
 
-enum SingingCharacter { firstRadioButton, secondRadioButton }
-
-/// This is the stateful widget that the main application instantiates.
 class AnimationSlider extends StatefulWidget {
   const AnimationSlider({Key? key}) : super(key: key);
 
@@ -13,47 +10,62 @@ class AnimationSlider extends StatefulWidget {
   State<AnimationSlider> createState() => _AnimationSliderState();
 }
 
-/// This is the private State class that goes with MyStatefulWidget.
 class _AnimationSliderState extends State<AnimationSlider>
-    with TickerProviderStateMixin {
-  late Animation<double> animation;
-  late AnimationController controller;
-
-  double _currentSliderValue = 200;
+    with TickerProviderStateMixin<AnimationSlider> {
+  late AnimationController _controllerCircle;
+  late AnimationController _controllerCircle2;
+  late AnimationController _controllerIcon;
+  late double _currentSliderValue = 1000;
   late bool isSelectedFirst;
   late bool isSelectedSecond;
-
+  late bool animate;
   @override
   void initState() {
     super.initState();
+    animate = true;
     isSelectedFirst = true;
     isSelectedSecond = false;
-    controller = AnimationController(
-        duration: Duration(milliseconds: _currentSliderValue.round()),
+    _controllerCircle = AnimationController(
+        duration: Duration(milliseconds: (_currentSliderValue / 2).round()),
+        reverseDuration:
+            Duration(milliseconds: (_currentSliderValue / 2).round()),
         vsync: this);
+    _controllerCircle.addListener(_update);
+    _controllerCircle.forward();
 
-    animation = Tween<double>(begin: 0, end: 1000).animate(CurvedAnimation(
-      parent: controller,
-      curve: Curves.linear,
-    ));
-    animation.addListener(() {
-      setState(() {
-        controller.forward();
-      });
+    _controllerCircle2 = AnimationController(
+        duration: Duration(milliseconds: (_currentSliderValue / 2).round()),
+        reverseDuration:
+            Duration(milliseconds: (_currentSliderValue / 2).round()),
+        vsync: this);
+    _controllerCircle2.addListener(_update);
+    _controllerCircle2.forward();
+
+    _controllerIcon = AnimationController(
+        duration: Duration(milliseconds: (_currentSliderValue / 2).round()),
+        reverseDuration:
+            Duration(milliseconds: (_currentSliderValue / 2).round()),
+        vsync: this);
+    _controllerIcon.addListener(_update);
+    _controllerIcon.forward();
+  }
+
+  void _update() {
+    setState(() {
+      animate = true;
     });
-    controller.forward();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    controller.dispose();
-    animation.removeListener(() {});
+    _controllerCircle.dispose();
+    _controllerIcon.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Container(
         color: Theme.of(context).cardColor,
@@ -62,60 +74,76 @@ class _AnimationSliderState extends State<AnimationSlider>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: ListTile(
-                    selected: isSelectedFirst,
+                  width: MediaQuery.of(context).size.width / 5,
+                  child: InkWell(
                     onTap: () {
                       if (isSelectedSecond == false) {
-                        setState(
-                          () {
-                            if (isSelectedFirst == false) {
-                              isSelectedFirst = true;
-                              isSelectedSecond = false;
-                            } else {
-                              isSelectedFirst = false;
-                              isSelectedSecond = true;
-                            }
-                          },
-                        );
+                        isSelectedFirst = false;
+                        isSelectedSecond = true;
+                        _controllerCircle.reset();
+                        _controllerCircle.forward();
+                        _controllerIcon.reset();
+
+                        setState(() {});
+                      }
+                      if (_controllerCircle.isCompleted) {
+                        _controllerIcon.reset();
+                        _controllerIcon.forward();
                       }
                     },
-                    leading: CustomPaint(
-                      painter: RadioButtonPainter(
-                          color: Colors.blue, isSelected: isSelectedFirst),
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
+                    child: CustomPaint(
+                      willChange: true,
+                      painter: EmptyRadioButtonPainter(
+                        color: Colors.blue,
+                        isSelected: isSelectedFirst,
+                        animationValue: _controllerCircle.value,
+                      ),
+                      child: CustomPaint(
+                        painter: IconPainter(
+                            isSelected: isSelectedFirst,
+                            animationValue: _controllerIcon.value),
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                        ),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: ListTile(
-                    selected: isSelectedSecond,
+                  width: MediaQuery.of(context).size.width / 5,
+                  child: InkWell(
                     onTap: () {
                       if (isSelectedFirst == false) {
-                        setState(
-                          () {
-                            if (isSelectedFirst == false) {
-                              isSelectedFirst = true;
-                              isSelectedSecond = false;
-                            } else {
-                              isSelectedFirst = false;
-                              isSelectedSecond = true;
-                            }
-                          },
-                        );
+                        isSelectedFirst = true;
+                        isSelectedSecond = false;
+                        _controllerCircle2.reset();
+                        _controllerCircle2.forward();
+                        _controllerIcon.reset();
+
+                        setState(() {});
+                      }
+                      if (_controllerCircle2.isCompleted) {
+                        _controllerIcon.reset();
+                        _controllerIcon.forward();
                       }
                     },
-                    leading: CustomPaint(
-                      painter: RadioButtonPainter(
-                          color: Colors.green, isSelected: isSelectedSecond),
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
+                    child: CustomPaint(
+                      painter: EmptyRadioButtonPainter(
+                        color: Colors.green,
+                        isSelected: isSelectedSecond,
+                        animationValue: _controllerCircle2.value,
+                      ),
+                      child: CustomPaint(
+                        painter: IconPainter(
+                          isSelected: isSelectedSecond,
+                          animationValue: _controllerIcon.value,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                        ),
                       ),
                     ),
                   ),
@@ -124,7 +152,7 @@ class _AnimationSliderState extends State<AnimationSlider>
             ),
             Center(
               child: Text(
-                "Animation duration",
+                "Animation duration ",
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -135,9 +163,7 @@ class _AnimationSliderState extends State<AnimationSlider>
               divisions: 1800,
               label: _currentSliderValue.round().toString(),
               onChanged: (double value) {
-                setState(() {
-                  _currentSliderValue = value;
-                });
+                setState(() {});
               },
             ),
             Center(
@@ -149,3 +175,4 @@ class _AnimationSliderState extends State<AnimationSlider>
     );
   }
 }
+

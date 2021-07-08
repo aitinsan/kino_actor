@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/models/actor.model.dart';
 import 'package:kino_actor/widgets/details/deteils_row.dart';
 import 'package:kino_actor/widgets/divider.dart';

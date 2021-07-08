@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/screens/actors_page.screen.dart';
 import 'package:kino_actor/screens/films_page.screen.dart';
 

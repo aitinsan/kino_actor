@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/widgets/card/app_card.model.dart';
 import 'package:kino_actor/view_models/film_list.viewmodel.dart';
 import 'package:kino_actor/widgets/card/app_card.widget.dart';

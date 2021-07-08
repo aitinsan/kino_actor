@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
 
-class RadioButtonPainter extends CustomPainter {
+class EmptyRadioButtonPainter extends CustomPainter {
   bool isSelected;
   final Color color;
+  double animationValue;
+  EmptyRadioButtonPainter({
+    required this.color,
+    required this.isSelected,
+    required this.animationValue,
+  });
 
-  RadioButtonPainter({required this.color, required this.isSelected});
+  var _paintCircle;
 
-
-  
-  var _paint;
   @override
   void paint(Canvas canvas, Size size) {
-    if (isSelected == true) {
-      _paint = Paint()
-        ..color = color
-        ..strokeWidth = 3
-        ..style = PaintingStyle.stroke
-        ..strokeCap = StrokeCap.round;
-    } else {
-      _paint = Paint()
-        ..color = color
-        ..strokeWidth = 3
-        ..style = PaintingStyle.fill
-        ..strokeCap = StrokeCap.round;
-    }
+    _paintCircle = Paint()
+      ..color = color
+      ..strokeWidth = 1
+      ..style = PaintingStyle.fill
+      ..strokeCap = StrokeCap.round;
+
     Offset center = Offset(size.width / 2, size.height / 2);
 
-    canvas.drawCircle(center, 10, _paint);
+    canvas.drawCircle(center, 15, _paintCircle);
+    if (isSelected == true) {
+      canvas.drawCircle(
+          center,
+          (animationValue) * 13,
+          Paint()
+            ..color = Colors.black
+            ..strokeWidth = 0
+            ..style = PaintingStyle.fill
+            ..strokeCap = StrokeCap.round);
+    }
   }
 
   @override
