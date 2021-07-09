@@ -9,10 +9,7 @@ class AppThemeNotifier with ChangeNotifier {
 
   getTheme() => _themeData;
 
-  setTheme(ThemeData themeData) async {
-    _themeData = themeData;
-    notifyListeners();
-  }
+  
 }
 
 class AppTheme {

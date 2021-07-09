@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Kinoactor',
 
-      theme: AppTheme.lightTheme,
+      theme: AppThemeNotifier(AppTheme.lightTheme).getTheme(),
 
       home: NavigationAppPage(
         initialPage: TabPage.ActorsPage,

@@ -180,10 +180,6 @@ class _FilmsListState extends State<FilmsList> {
         Expanded(
           flex: 1,
           child: ListView.builder(
-            // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //   crossAxisCount: 1,
-            //   childAspectRatio: 4.5,
-            // ),
             controller: _controller,
             itemCount: widget.vm.allFilms.length + 1,
             itemBuilder: (context, index) {
