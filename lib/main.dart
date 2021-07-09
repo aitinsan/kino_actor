@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/animation_slider/animation_slider.dart';
-import 'package:kino_actor/animation_slider/for_test.dart';
+
 //import 'package:kino_actor/animation_slider/for_test.dart';
 
 import 'package:kino_actor/lightTheme.dart';
@@ -44,7 +44,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AnimationRotate(),//AnimationSlider(),
+      theme: AppTheme.lightTheme,
+      home: AnimationSlider(),//AnimationSlider(),
     );
   }
 }

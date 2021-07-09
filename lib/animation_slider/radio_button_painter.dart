@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 class EmptyRadioButtonPainter extends CustomPainter {
-  bool isSelected;
   final Color color;
   double animationValue;
   EmptyRadioButtonPainter({
     required this.color,
-    required this.isSelected,
     required this.animationValue,
   });
 
@@ -23,16 +21,15 @@ class EmptyRadioButtonPainter extends CustomPainter {
     Offset center = Offset(size.width / 2, size.height / 2);
 
     canvas.drawCircle(center, 15, _paintCircle);
-    if (isSelected == true) {
-      canvas.drawCircle(
-          center,
-          (animationValue) * 13,
-          Paint()
-            ..color = Colors.black
-            ..strokeWidth = 0
-            ..style = PaintingStyle.fill
-            ..strokeCap = StrokeCap.round);
-    }
+
+    canvas.drawCircle(
+        center,
+        (animationValue) * 12,
+        Paint()
+          ..color = Colors.white
+          ..strokeWidth = 0
+          ..style = PaintingStyle.fill
+          ..strokeCap = StrokeCap.round);
   }
 
   @override
