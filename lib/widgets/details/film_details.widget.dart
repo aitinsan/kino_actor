@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/models/film.model.dart';
 import 'package:kino_actor/widgets/details/deteils_row.dart';
 import 'package:kino_actor/widgets/divider.dart';
 
 class FilmDetails extends StatelessWidget {
-  Film film;
+  final Film film;
   FilmDetails({Key? key, required this.film}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
+      
       extendBody: true,
-      backgroundColor: AppTheme.lightTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
           film.title,
-          style: TextStyle(color: AppTheme.lightTheme.primaryColor),
+          style: TextStyle(color: Theme.of(context).primaryColor),
         ),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: AppTheme.lightTheme.primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: AppTheme.lightTheme.scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -40,7 +41,7 @@ class FilmDetails extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.0),
             ),
             borderOnForeground: false,
-            color: AppTheme.lightTheme.cardColor,
+            color: Theme.of(context).cardColor,
             child: Padding(
               padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
               child: Column(

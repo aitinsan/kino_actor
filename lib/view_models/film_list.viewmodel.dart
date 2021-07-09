@@ -17,7 +17,7 @@ class FilmListViewModel extends ChangeNotifier {
   void getSearchedFilmsNextPage(String keyboard) async {
     final AppPage pagination = await _paginator.getNextPage(
       url:'/films',
-      query:'search=$keyboard&page=',
+      query:'search=$keyboard',
     );
     extendAllPeopleList(pagination);
     

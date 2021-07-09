@@ -59,9 +59,6 @@ class _ActorListState extends State<ActorList> {
       if (widget.vm.doesNextExist) {
         widget.vm.getSearchedPeopleNextPage(_textController.text);
       }
-      Center(
-        child: CircularProgressIndicator(),
-      );
     }
   }
 
@@ -87,24 +84,13 @@ class _ActorListState extends State<ActorList> {
         }
       } else
         return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  elevation: MaterialStateProperty.all<double>(0),
-                  overlayColor: MaterialStateProperty.all<Color>(
-                      AppTheme.lightTheme.scaffoldBackgroundColor),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      AppTheme.lightTheme.cardColor)),
-              child: AppCard(
-                items: [
-                  AppCardItem(
-                    title: widget.vm.allPeople[index].name,
-                    textFontSize: 18,
-                    colour: AppTheme.lightTheme.primaryColor,
-                  ),
-                ],
-              ),
-              onPressed: () {
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+          child: Material(
+            elevation: 0,
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            child: InkWell(
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -114,8 +100,20 @@ class _ActorListState extends State<ActorList> {
                   ),
                 );
               },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: AppCard(
+                  items: [
+                    AppCardItem(
+                      title: widget.vm.allPeople[index].name,
+                      textFontSize: 18,
+                      colour: Theme.of(context).primaryColor,
+                    ),
+                  ],
+                ),
+              ),
             ),
-          
+          ),
         );
     } else {
       widget.vm.getSearchedPeopleNextPage(_textController.text);
@@ -135,14 +133,14 @@ class _ActorListState extends State<ActorList> {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: AppTheme.lightTheme.scaffoldBackgroundColor
+                  color: Theme.of(context).scaffoldBackgroundColor
                       .withOpacity(0.5),
                   spreadRadius: 3,
                   blurRadius: 5,
                   offset: Offset(0, 3), // changes position of shadow
                 ),
               ],
-              color: AppTheme.lightTheme.cardColor,
+              color: Theme.of(context).cardColor,
               borderRadius: new BorderRadius.circular(50),
             ),
             child: Row(
@@ -155,7 +153,7 @@ class _ActorListState extends State<ActorList> {
                       decoration: InputDecoration(
                         hintText: "Search characters",
                         hintStyle: TextStyle(
-                          color: AppTheme.lightTheme.primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                         border: InputBorder.none,
                       ),
@@ -168,7 +166,7 @@ class _ActorListState extends State<ActorList> {
                   child: IconButton(
                     icon: Icon(
                       Icons.search,
-                      color: AppTheme.lightTheme.primaryColor,
+                      color: Theme.of(context).primaryColor,
                     ),
                     onPressed: () {
                       widget.vm.cleanAllPeopleList();
@@ -183,17 +181,11 @@ class _ActorListState extends State<ActorList> {
         ),
         Expanded(
           flex: 1,
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              childAspectRatio: 5,
-            ),
+          child: ListView.builder(
             controller: _controller,
             itemCount: widget.vm.allPeople.length + 1,
             itemBuilder: (context, index) {
-              return GridTile(
-                child: pageListFunction(context, index),
-              );
+              return pageListFunction(context, index);
             },
           ),
         ),

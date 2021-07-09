@@ -17,7 +17,7 @@ class ActorListViewModel extends ChangeNotifier {
   void getSearchedPeopleNextPage(String keyboard) async {
     final AppPage pagination = await _paginator.getNextPage(
       url: '/people',
-      query: 'search=$keyboard&page=',
+      query: 'search=$keyboard',
     );
 
     extendAllPeopleList(pagination);
