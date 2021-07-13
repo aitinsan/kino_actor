@@ -1,23 +1,32 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:kino_actor/animation_slider/custom_painter/empty_radio_button_painter.dart';
 import 'package:kino_actor/animation_slider/custom_painter/icon_painter.dart';
 
+enum RadioButtonNumber { blue, green, yellow }
+
+final _currentColor = {
+  'RadioButtonNumber.blue': Color(0xFF2193F3),
+  'RadioButtonNumber.green': Color(0xFF4CAF50),
+  'RadioButtonNumber.yellow': Color(0xFFFFC107),
+};
+
 class RadioButton<T> extends StatefulWidget {
   final T value;
   final T? groupValue;
-  final Color colour;
+
   final ValueChanged<T?>? onChanged;
   final Duration animatedDuration;
   bool get _selected => value == groupValue;
 
-  RadioButton(
-      {Key? key,
-      required this.animatedDuration,
-      required this.value,
-      required this.groupValue,
-      required this.onChanged,
-      required this.colour})
-      : super(key: key);
+  RadioButton({
+    Key? key,
+    required this.animatedDuration,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   _RadioButtonState<T> createState() => _RadioButtonState<T>();
@@ -25,19 +34,23 @@ class RadioButton<T> extends StatefulWidget {
 
 class _RadioButtonState<T> extends State<RadioButton<T>>
     with SingleTickerProviderStateMixin {
+  
+  late Color _color;
   late AnimationController _controllerCircle;
 
   late Animation<double> circleButtomAnimation;
   late Animation<double> iconButtomAnimation;
-  
+
   @override
   void initState() {
     super.initState();
+    print("prikol ${_currentColor['${RadioButtonNumber.blue}']}");
+    _color = _currentColor['${widget.value}']!;
     _controllerCircle = AnimationController(
-    duration: widget.animatedDuration,
-    reverseDuration: widget.animatedDuration,
-    vsync: this,
-  );
+      duration: widget.animatedDuration,
+      reverseDuration: widget.animatedDuration,
+      vsync: this,
+    );
     if (widget._selected) {
       _controllerCircle.value = 0.0;
     } else {
@@ -65,16 +78,14 @@ class _RadioButtonState<T> extends State<RadioButton<T>>
       ),
     ));
   }
+
   @override
   void didChangeDependencies() {
-
     super.didChangeDependencies();
-    
-
   }
+
   @override
   void didUpdateWidget(RadioButton<T> oldWidget) {
-    
     super.didUpdateWidget(oldWidget);
     if (widget._selected != oldWidget._selected) {
       if (widget._selected) {
@@ -85,12 +96,9 @@ class _RadioButtonState<T> extends State<RadioButton<T>>
     }
     _controllerCircle.duration = widget.animatedDuration;
     _controllerCircle.reverseDuration = widget.animatedDuration;
-    
-    
   }
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
-        
     return GestureDetector(
       onTap: () {
         widget.onChanged!(widget.value);
@@ -99,7 +107,7 @@ class _RadioButtonState<T> extends State<RadioButton<T>>
         isComplex: true,
         willChange: true,
         painter: EmptyRadioButtonPainter(
-          color: widget.colour,
+          color: _color,
           animationValue: circleButtomAnimation.value,
         ),
         child: CustomPaint(
@@ -115,7 +123,6 @@ class _RadioButtonState<T> extends State<RadioButton<T>>
 
   @override
   Widget build(BuildContext context) {
-
     //как я понял animnation builder нужен чтобы просто оповещать _buildAnimation об изменениях.
     // Без него не controllerCircle будет меняться но передаваться в паинтер не будет. И так меньше кода получается
     return AnimatedBuilder(

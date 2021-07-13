@@ -10,11 +10,13 @@ class AnimationAll extends StatefulWidget {
   State<AnimationAll> createState() => _AnimationAllState();
 }
 
-enum RadioButtonNumber { one, two, three }
+enum RadioButtonNumber { blue, green, yellow }
 
 class _AnimationAllState extends State<AnimationAll> {
   double currentSliderValue = 200;
-  RadioButtonNumber? _numberOfRadioButton = RadioButtonNumber.one;
+
+  RadioButtonNumber? _numberOfRadioButton = RadioButtonNumber.blue;
+  Color colorOfRadio = Colors.blue;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +41,8 @@ class _AnimationAllState extends State<AnimationAll> {
                     _numberOfRadioButton = value;
                   });
                 },
-                value: RadioButtonNumber.one,
-                colour: Colors.blue,
+                value: RadioButtonNumber.blue,
+                
               ),
               RadioButton(
                 animatedDuration:
@@ -51,8 +53,8 @@ class _AnimationAllState extends State<AnimationAll> {
                     _numberOfRadioButton = value;
                   });
                 },
-                value: RadioButtonNumber.two,
-                colour: Colors.green,
+                value: RadioButtonNumber.green,
+                
               ),
               RadioButton(
                 animatedDuration:
@@ -63,8 +65,8 @@ class _AnimationAllState extends State<AnimationAll> {
                     _numberOfRadioButton = value;
                   });
                 },
-                value: RadioButtonNumber.three,
-                colour: Colors.yellow,
+                value: RadioButtonNumber.yellow,
+                
               ),
             ],
           ),

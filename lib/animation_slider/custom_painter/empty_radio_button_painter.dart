@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class EmptyRadioButtonPainter extends CustomPainter {
-  final Color color;
+  final Color? color;
   double animationValue;
   EmptyRadioButtonPainter({
     required this.color,
@@ -13,7 +13,7 @@ class EmptyRadioButtonPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     _paintCircle = Paint()
-      ..color = color
+      ..color = color!
       ..strokeWidth = 1
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.round;
