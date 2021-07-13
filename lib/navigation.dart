@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kino_actor/animation_slider/animation_slider.dart';
 import 'package:kino_actor/screens/actors_page.screen.dart';
 import 'package:kino_actor/screens/films_page.screen.dart';
 
 enum TabPage {
   FilmsPage,
   ActorsPage,
+  AnimationSlider,
 }
 
 //Виджеты для главной страницы с фильмами, актерами и поиском
@@ -30,6 +32,7 @@ class _NavigationAppPageState extends State<NavigationAppPage> {
     final _tabs = {
     TabPage.ActorsPage: ActorsPage(),
     TabPage.FilmsPage: FilmsPage(),
+    TabPage.AnimationSlider: AnimationAll(),
   };
     return Scaffold(
       body: _tabs[_currentPage],
@@ -38,6 +41,8 @@ class _NavigationAppPageState extends State<NavigationAppPage> {
           BottomNavigationBarItem(icon: Icon(Icons.movie), label: 'films'),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_box), label: 'actors'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.animation), label: 'animation'),
         ],
         backgroundColor:Theme.of(context).primaryColor,
         currentIndex: _currentPage.index,
