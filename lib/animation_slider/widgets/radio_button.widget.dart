@@ -25,19 +25,19 @@ class RadioButton<T> extends StatefulWidget {
 
 class _RadioButtonState<T> extends State<RadioButton<T>>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controllerCircle = AnimationController(
-    duration: Duration(seconds: 2),
-    reverseDuration: Duration(seconds: 2),
-    vsync: this,
-  );
+  late AnimationController _controllerCircle;
 
   late Animation<double> circleButtomAnimation;
   late Animation<double> iconButtomAnimation;
-
+  
   @override
   void initState() {
     super.initState();
-
+    _controllerCircle = AnimationController(
+    duration: widget.animatedDuration,
+    reverseDuration: widget.animatedDuration,
+    vsync: this,
+  );
     if (widget._selected) {
       _controllerCircle.value = 0.0;
     } else {
@@ -65,11 +65,17 @@ class _RadioButtonState<T> extends State<RadioButton<T>>
       ),
     ));
   }
+  @override
+  void didChangeDependencies() {
 
+    super.didChangeDependencies();
+    
+
+  }
   @override
   void didUpdateWidget(RadioButton<T> oldWidget) {
+    
     super.didUpdateWidget(oldWidget);
-    //print('widget selected in ${widget.value} is  ${widget._selected}');
     if (widget._selected != oldWidget._selected) {
       if (widget._selected) {
         _controllerCircle.reverse();
@@ -77,10 +83,15 @@ class _RadioButtonState<T> extends State<RadioButton<T>>
         _controllerCircle.forward();
       }
     }
+    _controllerCircle.duration = widget.animatedDuration;
+    _controllerCircle.reverseDuration = widget.animatedDuration;
+    
+    
   }
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
-    return InkWell(
+        
+    return GestureDetector(
       onTap: () {
         widget.onChanged!(widget.value);
       },
@@ -104,6 +115,7 @@ class _RadioButtonState<T> extends State<RadioButton<T>>
 
   @override
   Widget build(BuildContext context) {
+
     //как я понял animnation builder нужен чтобы просто оповещать _buildAnimation об изменениях.
     // Без него не controllerCircle будет меняться но передаваться в паинтер не будет. И так меньше кода получается
     return AnimatedBuilder(

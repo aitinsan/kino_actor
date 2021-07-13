@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kino_actor/animation_slider/widgets/radio_button.widget.dart';
 import 'package:kino_actor/animation_slider/widgets/slider_animation.widget.dart';
@@ -12,7 +13,7 @@ class AnimationAll extends StatefulWidget {
 enum RadioButtonNumber { one, two, three }
 
 class _AnimationAllState extends State<AnimationAll> {
-  double currentSliderValue = 1000;
+  double currentSliderValue = 200;
   RadioButtonNumber? _numberOfRadioButton = RadioButtonNumber.one;
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class _AnimationAllState extends State<AnimationAll> {
                 groupValue: _numberOfRadioButton,
                 onChanged: (RadioButtonNumber? value) {
                   setState(() {
-                   _numberOfRadioButton = value;
+                    _numberOfRadioButton = value;
                   });
                 },
                 value: RadioButtonNumber.one,
@@ -73,9 +74,15 @@ class _AnimationAllState extends State<AnimationAll> {
               style: TextStyle(fontSize: 18),
             ),
           ),
-          SliderAnimation(),
+          SliderAnimation(
+            onSliderChanged: (double? value) {
+              setState(() {
+                currentSliderValue = value!;
+              });
+            },
+          ),
           Center(
-            child: Text("${0.round()} ms"),
+            child: Text("${currentSliderValue.round()} ms"),
           ),
         ],
       ),
