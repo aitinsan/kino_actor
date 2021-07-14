@@ -19,6 +19,12 @@ class _AnimationAllState extends State<AnimationAll> {
   int numberOfCheckBoxes = 1;
   CheckBoxColor? _colorOfCheckBox = CheckBoxColor.blue;
   Color colorOfRadio = Colors.blue;
+  @override
+  void initState() {
+    super.initState();
+    addColors();
+  }
+
   void addColors() {
     for (var i = 0; i < numberOfCheckBoxes; i++) {
       values.add(
@@ -29,76 +35,89 @@ class _AnimationAllState extends State<AnimationAll> {
 
   @override
   Widget build(BuildContext context) {
-    addColors();
     return Scaffold(
+      extendBody: true,
       backgroundColor: Theme.of(context).cardColor,
-      // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).cardColor,
-      //   elevation: 0,
-      // ),
-      body: Padding(
-        padding: EdgeInsets.only(top: 60),
-        child: Center(
-          child: SingleChildScrollView(
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: Theme.of(context).cardColor,
+        elevation: 0,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraint) {
+          return SingleChildScrollView(
             reverse: true,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Wrap(
-                  spacing: 5.0, // gap between adjacent chips
-                  runSpacing: 4.0, // gap between lines
-                  children: _generateChildren(numberOfCheckBoxes),
-                ),
-                Center(
-                  child: Text(
-                    "Animation duration ",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                SliderAnimation(
-                  onSliderChanged: (double? value) {
-                    setState(() {
-                      currentSliderValue = value!;
-                    });
-                  },
-                ),
-                Center(
-                  child: Text("${currentSliderValue.round()} ms"),
-                ),
-                Row(
-                  //crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            numberOfCheckBoxes += 10;
-                          });
-                        },
-                        child: Text('Add checkboxes'),
-                      ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraint.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: 500),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Wrap(
+                          spacing: 5.0, // gap between adjacent chips
+                          runSpacing: 4.0, // gap between lines
+                          children: _generateChildren(numberOfCheckBoxes),
+                        ),
+                        Center(
+                          child: Text(
+                            "Animation duration ",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        SliderAnimation(
+                          onSliderChanged: (double? value) {
+                            setState(() {
+                              currentSliderValue = value!;
+                            });
+                          },
+                        ),
+                        Center(
+                          child: Text("${currentSliderValue.round()} ms"),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            numberOfCheckBoxes = 0;
-                            values = [];
-                          });
-                        },
-                        child: Text('Clear'),
+                  ),
+                  Row(
+                    //crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              numberOfCheckBoxes += 10;
+                              addColors();
+                            });
+                          },
+                          child: Text('Add checkboxes'),
+                        ),
                       ),
-                    )
-                  ],
-                ),
-              ],
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              numberOfCheckBoxes = 0;
+                              values = [];
+                            });
+                          },
+                          child: Text('Clear'),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
