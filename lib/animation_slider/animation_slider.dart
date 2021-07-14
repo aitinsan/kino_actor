@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kino_actor/animation_slider/check_box_colors.dart';
@@ -14,13 +13,22 @@ class AnimationAll extends StatefulWidget {
 }
 
 class _AnimationAllState extends State<AnimationAll> {
+  List<CheckBoxColor> values = [];
   double currentSliderValue = 200;
   int numberOfCheckBoxes = 1;
   CheckBoxColor? _colorOfCheckBox = CheckBoxColor.blue;
   Color colorOfRadio = Colors.blue;
+  void addColors() {
+    for (var i = 0; i < numberOfCheckBoxes; i++) {
+      values.add(
+        CheckBoxColor.values[Random().nextInt(3)],
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    addColors();
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
@@ -85,7 +93,7 @@ class _AnimationAllState extends State<AnimationAll> {
     );
   }
 
-  Widget _generateItem(int numberColor) {
+  Widget _generateItem(int valueIndex) {
     //int numberColor = Random().nextInt(3);
     return CheckBox(
       animatedDuration: Duration(milliseconds: currentSliderValue.round()),
@@ -95,14 +103,15 @@ class _AnimationAllState extends State<AnimationAll> {
         print(value);
         _colorOfCheckBox = value;
       },
-      value: CheckBoxColor.values[numberColor],
+      value: values[valueIndex], //CheckBoxColor.values[valueIndex],
     );
   }
 
   List<Widget> _generateChildren(int count) {
+    print(values);
     List<Widget> checkBoxes = [];
     for (var i = 0; i < count; i++) {
-      checkBoxes.add(_generateItem(Random().nextInt(3)));
+      checkBoxes.add(_generateItem(i));
     }
 
     return checkBoxes;
