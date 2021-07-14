@@ -14,9 +14,8 @@ class AnimationAll extends StatefulWidget {
 }
 
 class _AnimationAllState extends State<AnimationAll> {
-  
   double currentSliderValue = 200;
-
+  int numberOfCheckBoxes = 1;
   CheckBoxColor? _colorOfCheckBox = CheckBoxColor.blue;
   Color colorOfRadio = Colors.blue;
 
@@ -35,8 +34,7 @@ class _AnimationAllState extends State<AnimationAll> {
           Wrap(
             spacing: 5.0, // gap between adjacent chips
             runSpacing: 4.0, // gap between lines
-            children: _generateChildren(7),
-            
+            children: _generateChildren(numberOfCheckBoxes),
           ),
           Center(
             child: Text(
@@ -54,6 +52,34 @@ class _AnimationAllState extends State<AnimationAll> {
           Center(
             child: Text("${currentSliderValue.round()} ms"),
           ),
+          Row(
+            //crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      numberOfCheckBoxes += 10;
+                    });
+                  },
+                  child: Text('Add checkboxes'),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      numberOfCheckBoxes = 0;
+                    });
+                  },
+                  child: Text('Clear'),
+                ),
+              )
+            ],
+          ),
         ],
       ),
     );
@@ -65,17 +91,12 @@ class _AnimationAllState extends State<AnimationAll> {
       animatedDuration: Duration(milliseconds: currentSliderValue.round()),
       groupValue: _colorOfCheckBox,
       onChanged: (CheckBoxColor? value) {
-          setState(() {
-            
-          });
-          print(value);
-          _colorOfCheckBox = value;
-        
+        setState(() {});
+        print(value);
+        _colorOfCheckBox = value;
       },
       value: CheckBoxColor.values[numberColor],
-      
     );
-    
   }
 
   List<Widget> _generateChildren(int count) {
@@ -87,43 +108,3 @@ class _AnimationAllState extends State<AnimationAll> {
     return checkBoxes;
   }
 }
-
-
-// children: <Widget>[
-            // CheckBox(
-            //   animatedDuration:
-            //       Duration(milliseconds: currentSliderValue.round()),
-            //   groupValue: _colorOfCheckBox,
-            //   onChanged: (CheckBoxColor? value) {
-            //     setState(() {
-            //       _colorOfCheckBox = value;
-            //     });
-            //   },
-            //   value: CheckBoxColor.blue,
-            // ),
-            //   CheckBox(
-            //     animatedDuration:
-            //         Duration(milliseconds: currentSliderValue.round()),
-            //     groupValue: _colorOfCheckBox,
-            //     onChanged: (CheckBoxColor? value) {
-            //       setState(() {
-            //         _colorOfCheckBox = value;
-            //       });
-            //     },
-            //     value: CheckBoxColor.green,
-            //   ),
-            //   CheckBox(
-            //     animatedDuration:
-            //         Duration(milliseconds: currentSliderValue.round()),
-            //     groupValue: _colorOfCheckBox,
-            //     onChanged: (CheckBoxColor? value) {
-            //       setState(() {
-            //         _colorOfCheckBox = value;
-            //       });
-            //     },
-            //     value: CheckBoxColor.yellow,
-            //   ),
-            //   IconButton(
-            //     onPressed: () {},
-            //     icon: Icon(Icons.add),
-            //   )
