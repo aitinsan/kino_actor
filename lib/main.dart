@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+
 import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/navigation.dart';
 
+import 'package:provider/provider.dart';
+
 void main() {
+  MultiProvider(
+    providers: [
+      ChangeNotifierProvider<AppThemeNotifier>(
+        create: (_) => AppThemeNotifier(AppTheme.lightTheme),
+        child: MyApp(),
+      ),
+    ],
+  );
   runApp(MyApp());
 }
 
@@ -19,12 +30,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Kinoactor',
-      
-      theme: AppTheme.lightTheme,
-      
+
+      theme: AppThemeNotifier(AppTheme.lightTheme).getTheme(),
+
       home: NavigationAppPage(
-        initialPage: Tabs.ActorsPage,
+        initialPage: TabPage.AnimationSlider,
       ), //MyHomePage(),
     );
   }
 }
+
+

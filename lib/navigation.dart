@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:kino_actor/lightTheme.dart';
+import 'package:kino_actor/animation_slider/animation_slider.dart';
 import 'package:kino_actor/screens/actors_page.screen.dart';
 import 'package:kino_actor/screens/films_page.screen.dart';
 
-enum Tabs {
+enum TabPage {
   FilmsPage,
   ActorsPage,
+  AnimationSlider,
 }
 
 //Виджеты для главной страницы с фильмами, актерами и поиском
 class NavigationAppPage extends StatefulWidget {
   NavigationAppPage({Key? key, required this.initialPage}) : super(key: key);
-  final Tabs initialPage;
+  final TabPage initialPage;
   @override
   _NavigationAppPageState createState() => _NavigationAppPageState();
 }
 
 class _NavigationAppPageState extends State<NavigationAppPage> {
-  Tabs _currentPage = Tabs.FilmsPage;
+  TabPage _currentPage = TabPage.FilmsPage;
   @override
   void initState() {
     super.initState();
@@ -29,8 +30,9 @@ class _NavigationAppPageState extends State<NavigationAppPage> {
   @override
   Widget build(BuildContext context) {
     final _tabs = {
-    Tabs.ActorsPage: ActorsPage(),
-    Tabs.FilmsPage: FilmsPage(),
+    TabPage.ActorsPage: ActorsPage(),
+    TabPage.FilmsPage: FilmsPage(),
+    TabPage.AnimationSlider: AnimationAll(),
   };
     return Scaffold(
       body: _tabs[_currentPage],
@@ -39,12 +41,14 @@ class _NavigationAppPageState extends State<NavigationAppPage> {
           BottomNavigationBarItem(icon: Icon(Icons.movie), label: 'films'),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_box), label: 'actors'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.animation), label: 'animation'),
         ],
-        backgroundColor:AppTheme.lightTheme.primaryColor,
+        backgroundColor:Theme.of(context).primaryColor,
         currentIndex: _currentPage.index,
-        selectedItemColor: AppTheme.lightTheme.cardColor,
-        unselectedItemColor: AppTheme.lightTheme.cardColor,
-        onTap: (i) => setState(() => _currentPage = Tabs.values[i]),
+        selectedItemColor: Theme.of(context).cardColor,
+        unselectedItemColor: Theme.of(context).cardColor,
+        onTap: (i) => setState(() => _currentPage = TabPage.values[i]),
         showSelectedLabels: true,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,

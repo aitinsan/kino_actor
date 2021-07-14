@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DetailsRow extends StatelessWidget {
-  String item;  
-  String titleOfItem;
+  final String item;  
+  final String titleOfItem;
   DetailsRow({Key? key,required this.item, required this.titleOfItem}) : super(key: key);
 
   @override
