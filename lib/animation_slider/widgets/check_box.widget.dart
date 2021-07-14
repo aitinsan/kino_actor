@@ -10,7 +10,7 @@ class CheckBox<T> extends StatefulWidget {
   final ValueChanged<T?>? onChanged;
   final Duration animatedDuration;
   bool get _selected => value == groupValue;
-
+  //CheckBoxColor.values[Random().nextInt(3)];
   CheckBox({
     Key? key,
     required this.animatedDuration,
@@ -96,7 +96,7 @@ class _CheckBoxState<T> extends State<CheckBox<T>>
       child: CustomPaint(
         isComplex: true,
         willChange: true,
-        painter: EmptyRadioButtonPainter(
+        painter: EmptyCheckBoxPainter(
           color: _color,
           animationValue: circleButtomAnimation.value,
         ),
@@ -104,7 +104,7 @@ class _CheckBoxState<T> extends State<CheckBox<T>>
           willChange: true,
           painter: IconPainter(animationValue: iconButtomAnimation.value),
           child: Padding(
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.all(25),
           ),
         ),
       ),

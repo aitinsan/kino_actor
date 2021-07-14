@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class EmptyRadioButtonPainter extends CustomPainter {
+class EmptyCheckBoxPainter extends CustomPainter {
   final Color? color;
   double animationValue;
-  EmptyRadioButtonPainter({
+  EmptyCheckBoxPainter({
     required this.color,
     required this.animationValue,
   });
