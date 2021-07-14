@@ -1,18 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:kino_actor/animation_slider/check_box_colors.dart';
 import 'package:kino_actor/animation_slider/custom_painter/empty_radio_button_painter.dart';
 import 'package:kino_actor/animation_slider/custom_painter/icon_painter.dart';
 
-enum RadioButtonNumber { blue, green, yellow }
-
-final _currentColor = {
-  'RadioButtonNumber.blue': Color(0xFF2193F3),
-  'RadioButtonNumber.green': Color(0xFF4CAF50),
-  'RadioButtonNumber.yellow': Color(0xFFFFC107),
-};
-
-class RadioButton<T> extends StatefulWidget {
+class CheckBox<T> extends StatefulWidget {
   final T value;
   final T? groupValue;
 
@@ -20,7 +11,7 @@ class RadioButton<T> extends StatefulWidget {
   final Duration animatedDuration;
   bool get _selected => value == groupValue;
 
-  RadioButton({
+  CheckBox({
     Key? key,
     required this.animatedDuration,
     required this.value,
@@ -29,12 +20,11 @@ class RadioButton<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _RadioButtonState<T> createState() => _RadioButtonState<T>();
+  _CheckBoxState<T> createState() => _CheckBoxState<T>();
 }
 
-class _RadioButtonState<T> extends State<RadioButton<T>>
+class _CheckBoxState<T> extends State<CheckBox<T>>
     with SingleTickerProviderStateMixin {
-  
   late Color _color;
   late AnimationController _controllerCircle;
 
@@ -44,8 +34,8 @@ class _RadioButtonState<T> extends State<RadioButton<T>>
   @override
   void initState() {
     super.initState();
-    print("prikol ${_currentColor['${RadioButtonNumber.blue}']}");
-    _color = _currentColor['${widget.value}']!;
+    //print("prikol ${currentColor['${CheckBoxColor.blue}']}");
+    _color = currentColor[widget.value]!;
     _controllerCircle = AnimationController(
       duration: widget.animatedDuration,
       reverseDuration: widget.animatedDuration,
@@ -85,7 +75,7 @@ class _RadioButtonState<T> extends State<RadioButton<T>>
   }
 
   @override
-  void didUpdateWidget(RadioButton<T> oldWidget) {
+  void didUpdateWidget(CheckBox<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget._selected != oldWidget._selected) {
       if (widget._selected) {

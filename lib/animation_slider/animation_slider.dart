@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:kino_actor/animation_slider/widgets/radio_button.widget.dart';
+import 'package:kino_actor/animation_slider/check_box_colors.dart';
+import 'package:kino_actor/animation_slider/widgets/check_box.widget.dart';
 import 'package:kino_actor/animation_slider/widgets/slider_animation.widget.dart';
 
 class AnimationAll extends StatefulWidget {
@@ -10,12 +11,10 @@ class AnimationAll extends StatefulWidget {
   State<AnimationAll> createState() => _AnimationAllState();
 }
 
-enum RadioButtonNumber { blue, green, yellow }
-
 class _AnimationAllState extends State<AnimationAll> {
   double currentSliderValue = 200;
 
-  RadioButtonNumber? _numberOfRadioButton = RadioButtonNumber.blue;
+  CheckBoxColor? _colorOfCheckBox = CheckBoxColor.blue;
   Color colorOfRadio = Colors.blue;
   @override
   Widget build(BuildContext context) {
@@ -29,47 +28,46 @@ class _AnimationAllState extends State<AnimationAll> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RadioButton(
+          Wrap(
+            spacing: 8.0, // gap between adjacent chips
+            runSpacing: 4.0, // gap between lines
+            children: <Widget>[
+              CheckBox(
                 animatedDuration:
                     Duration(milliseconds: currentSliderValue.round()),
-                groupValue: _numberOfRadioButton,
-                onChanged: (RadioButtonNumber? value) {
+                groupValue: _colorOfCheckBox,
+                onChanged: (CheckBoxColor? value) {
                   setState(() {
-                    _numberOfRadioButton = value;
+                    _colorOfCheckBox = value;
                   });
                 },
-                value: RadioButtonNumber.blue,
-                
+                value: CheckBoxColor.blue,
               ),
-              RadioButton(
+              CheckBox(
                 animatedDuration:
                     Duration(milliseconds: currentSliderValue.round()),
-                groupValue: _numberOfRadioButton,
-                onChanged: (RadioButtonNumber? value) {
+                groupValue: _colorOfCheckBox,
+                onChanged: (CheckBoxColor? value) {
                   setState(() {
-                    _numberOfRadioButton = value;
+                    _colorOfCheckBox = value;
                   });
                 },
-                value: RadioButtonNumber.green,
-                
+                value: CheckBoxColor.green,
               ),
-              RadioButton(
+              CheckBox(
                 animatedDuration:
                     Duration(milliseconds: currentSliderValue.round()),
-                groupValue: _numberOfRadioButton,
-                onChanged: (RadioButtonNumber? value) {
+                groupValue: _colorOfCheckBox,
+                onChanged: (CheckBoxColor? value) {
                   setState(() {
-                    _numberOfRadioButton = value;
+                    _colorOfCheckBox = value;
                   });
                 },
-                value: RadioButtonNumber.yellow,
-                
+                value: CheckBoxColor.yellow,
               ),
             ],
           ),
+          
           Center(
             child: Text(
               "Animation duration ",
