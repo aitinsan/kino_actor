@@ -12,18 +12,17 @@ class _SliderAnimationState extends State<SliderAnimation> {
   @override
   Widget build(BuildContext context) {
     return Slider(
-            value: currentSliderValue,
-            min: 200,
-            max: 2000,
-            divisions: 1800,
-            label: currentSliderValue.round().toString(),
-            onChanged: (double value) {
-              setState(() {
-                 currentSliderValue = value;
-                 widget.onSliderChanged!(value);
-              });
-             
-            },
-          );
+      value: currentSliderValue,
+      min: 200,
+      max: 2000,
+      divisions: 1800,
+      label: currentSliderValue.round().toString(),
+      onChanged: (double value) {
+        setState(() {
+          currentSliderValue = value;
+          widget.onSliderChanged!(value);
+        });
+      },
+    );
   }
 }

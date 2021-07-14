@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:kino_actor/animation_slider/check_box_colors.dart';
 import 'package:kino_actor/animation_slider/widgets/check_box.widget.dart';
 import 'package:kino_actor/animation_slider/widgets/slider_animation.widget.dart';
@@ -31,64 +32,73 @@ class _AnimationAllState extends State<AnimationAll> {
     addColors();
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).cardColor,
-        elevation: 0,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Wrap(
-            spacing: 5.0, // gap between adjacent chips
-            runSpacing: 4.0, // gap between lines
-            children: _generateChildren(numberOfCheckBoxes),
-          ),
-          Center(
-            child: Text(
-              "Animation duration ",
-              style: TextStyle(fontSize: 18),
+      // appBar: AppBar(
+      //   backgroundColor: Theme.of(context).cardColor,
+      //   elevation: 0,
+      // ),
+      body: Padding(
+        padding: EdgeInsets.only(top: 60),
+        child: Center(
+          child: SingleChildScrollView(
+            reverse: true,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Wrap(
+                  spacing: 5.0, // gap between adjacent chips
+                  runSpacing: 4.0, // gap between lines
+                  children: _generateChildren(numberOfCheckBoxes),
+                ),
+                Center(
+                  child: Text(
+                    "Animation duration ",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                SliderAnimation(
+                  onSliderChanged: (double? value) {
+                    setState(() {
+                      currentSliderValue = value!;
+                    });
+                  },
+                ),
+                Center(
+                  child: Text("${currentSliderValue.round()} ms"),
+                ),
+                Row(
+                  //crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            numberOfCheckBoxes += 10;
+                          });
+                        },
+                        child: Text('Add checkboxes'),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            numberOfCheckBoxes = 0;
+                            values = [];
+                          });
+                        },
+                        child: Text('Clear'),
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
           ),
-          SliderAnimation(
-            onSliderChanged: (double? value) {
-              setState(() {
-                currentSliderValue = value!;
-              });
-            },
-          ),
-          Center(
-            child: Text("${currentSliderValue.round()} ms"),
-          ),
-          Row(
-            //crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      numberOfCheckBoxes += 10;
-                    });
-                  },
-                  child: Text('Add checkboxes'),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      numberOfCheckBoxes = 0;
-                    });
-                  },
-                  child: Text('Clear'),
-                ),
-              )
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
