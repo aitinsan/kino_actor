@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/animation_slider/animation_slider.dart';
+import 'package:kino_actor/audio_recorder/audio_recorder.dart';
+import 'package:kino_actor/audio_recorder/audio_recorder_page.screen.dart';
 import 'package:kino_actor/screens/actors_page.screen.dart';
 import 'package:kino_actor/screens/films_page.screen.dart';
-
-enum TabPage {
-  FilmsPage,
-  ActorsPage,
-  AnimationSlider,
-}
+import 'package:kino_actor/tab_page.dart';
 
 //Виджеты для главной страницы с фильмами, актерами и поиском
 class NavigationAppPage extends StatefulWidget {
@@ -25,26 +22,36 @@ class _NavigationAppPageState extends State<NavigationAppPage> {
     _currentPage = widget.initialPage;
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     final _tabs = {
-    TabPage.ActorsPage: ActorsPage(),
-    TabPage.FilmsPage: FilmsPage(),
-    TabPage.AnimationSlider: AnimationAll(),
-  };
+      TabPage.ActorsPage: ActorsPage(),
+      TabPage.FilmsPage: FilmsPage(),
+      TabPage.AnimationSlider: AnimationAll(),
+      TabPage.AudioRecorderPage: AudioRecorderPage(),
+    };
     return Scaffold(
       body: _tabs[_currentPage],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.movie), label: 'films'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_box), label: 'actors'),
+            icon: Icon(Icons.movie),
+            label: 'films',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.animation), label: 'animation'),
+            icon: Icon(Icons.account_box),
+            label: 'actors',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.animation_sharp),
+            label: 'animation',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.music_note),
+            label: 'audio',
+          ),
         ],
-        backgroundColor:Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         currentIndex: _currentPage.index,
         selectedItemColor: Theme.of(context).cardColor,
         unselectedItemColor: Theme.of(context).cardColor,

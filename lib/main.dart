@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:kino_actor/lightTheme.dart';
 import 'package:kino_actor/navigation.dart';
+import 'package:kino_actor/tab_page.dart';
 
 import 'package:provider/provider.dart';
 
@@ -30,14 +31,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Kinoactor',
-
       theme: AppThemeNotifier(AppTheme.lightTheme).getTheme(),
-
       home: NavigationAppPage(
-        initialPage: TabPage.AnimationSlider,
-      ), //MyHomePage(),
+        initialPage: TabPage.AudioRecorderPage,
+      ),
     );
   }
 }
-
-
