@@ -5,7 +5,6 @@ import 'package:record/record.dart';
 class AudioRecorder extends StatefulWidget {
   AudioRecorder({Key? key, required this.onStop}) : super(key: key);
   final void Function(String path) onStop;
-
   @override
   _AudioRecorderState createState() => _AudioRecorderState();
 }
@@ -32,7 +31,7 @@ class _AudioRecorderState extends State<AudioRecorder> {
     super.dispose();
   }
 
-  Widget _buildStopControl() {
+  Widget _buildStartStopControl() {
     late Icon icon;
     late Color iconColor;
     if (_isRecording || _isPaused) {
@@ -68,10 +67,7 @@ class _AudioRecorderState extends State<AudioRecorder> {
 
   Widget _buildPauseControl() {
     if (!_isPaused && !_isRecording) {
-      //TODO: remove text
-      return SizedBox.shrink(
-        child: Text('_buildPauseControl'),
-      );
+      return SizedBox.shrink();
     }
     late Icon icon;
     late Color iconColor;
@@ -152,7 +148,8 @@ class _AudioRecorderState extends State<AudioRecorder> {
     _timer?.cancel();
     _ampTimer?.cancel();
     final path = await _audioRecorder.stop();
-    widget.onStop(path!);
+    print("this is the path: ${path!.toUpperCase()}");
+    widget.onStop(path);
     setState(() => _isPaused = true);
   }
 
@@ -166,7 +163,7 @@ class _AudioRecorderState extends State<AudioRecorder> {
 
   //resume - это когда продолжаешь запись после паузы
   Future<void> _resume() async {
-    _startTimer;
+    _startTimer();
     await _audioRecorder.resume();
     setState(() => _isPaused = false);
   }
@@ -197,23 +194,13 @@ class _AudioRecorderState extends State<AudioRecorder> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildStopControl(),
-            const SizedBox(
-              width: 20,
-            ),
+            _buildStartStopControl(),
             _buildPauseControl(),
-            const SizedBox(
-              width: 20,
-            ),
             _buildText(),
           ],
         ),
         if (_amplitude != null) ...[
-          const SizedBox(
-            height: 40,
-          ),
           Text('Current amplitude of sound: ${_amplitude?.current ?? 0.0}'),
-          //Text('Max Ampli'),
         ]
       ],
     );

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart' as ap;
-import 'package:kino_actor/audio_recorder/audio_player.dart';
-import 'package:kino_actor/audio_recorder/audio_recorder.dart';
+import 'package:just_audio/just_audio.dart' as audioPlayer;
+import 'package:kino_actor/audio_recorder/player/audio_player.dart';
+import 'package:kino_actor/audio_recorder/record/audio_recorder.dart';
+import 'package:kino_actor/audio_recorder/services/soundPlayer.service.dart';
+import 'package:provider/provider.dart';
 
 class AudioRecorderPage extends StatefulWidget {
   @override
@@ -10,12 +12,29 @@ class AudioRecorderPage extends StatefulWidget {
 
 class _AudioRecorderPageState extends State<AudioRecorderPage> {
   bool showPlayer = false;
-  ap.AudioSource? audioSource;
+  audioPlayer.AudioSource? audioSource;
 
   @override
   void initState() {
     showPlayer = false;
     super.initState();
+  }
+
+  Widget _playerPage(context) {
+    return ChangeNotifierProvider<SoundPlayer>(
+      create: (context) => SoundPlayer(),
+      child: Consumer<SoundPlayer>(
+        builder: (context, vm, _) => Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25),
+          child: AudioPlayer(
+            source: audioSource!,
+            onDelete: () {
+              setState(() => showPlayer = false);
+            },
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -24,19 +43,12 @@ class _AudioRecorderPageState extends State<AudioRecorderPage> {
       home: Scaffold(
         body: Center(
           child: showPlayer
-              ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: AudioPlayer(
-                    source: audioSource!,
-                    onDelete: () {
-                      setState(() => showPlayer = false);
-                    },
-                  ),
-                )
+              ? _playerPage(context)
               : AudioRecorder(
                   onStop: (path) {
                     setState(() {
-                      audioSource = ap.AudioSource.uri(Uri.parse(path));
+                      audioSource =
+                          audioPlayer.AudioSource.uri(Uri.parse(path));
                       showPlayer = true;
                     });
                   },

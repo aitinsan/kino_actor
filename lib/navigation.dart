@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kino_actor/animation_slider/animation_slider.dart';
-import 'package:kino_actor/audio_recorder/audio_recorder.dart';
 import 'package:kino_actor/audio_recorder/audio_recorder_page.screen.dart';
 import 'package:kino_actor/screens/actors_page.screen.dart';
 import 'package:kino_actor/screens/films_page.screen.dart';
 import 'package:kino_actor/tab_page.dart';
+import 'package:path_provider/path_provider.dart';
 
 //Виджеты для главной страницы с фильмами, актерами и поиском
 class NavigationAppPage extends StatefulWidget {
