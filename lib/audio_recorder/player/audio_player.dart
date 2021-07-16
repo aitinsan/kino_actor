@@ -34,8 +34,10 @@ class AudioPlayerState extends State<AudioPlayer> {
         .audioPlayer.durationStream
         .listen((duration) => setState(() {}));
     _soundTrack.init(widget.source);
+    setState(() {});
     super.initState();
   }
+  
 
   Widget _buildControl() {
     Icon icon;
@@ -92,7 +94,6 @@ class AudioPlayerState extends State<AudioPlayer> {
             final position = v * duration.inMilliseconds;
             _soundTrack.audioPlayer
                 .seek(Duration(milliseconds: position.round()));
-            
           }
         },
         value: canSetValue && duration != null
@@ -117,8 +118,7 @@ class AudioPlayerState extends State<AudioPlayer> {
                   color: const Color(0xFF73748D),
                   size: SoundPlayer.deleteBtnSize),
               onPressed: () {
-                
-                 _soundTrack.some(widget.onDelete);
+                _soundTrack.stopPlayer(widget.onDelete);
               },
             ),
           ],
